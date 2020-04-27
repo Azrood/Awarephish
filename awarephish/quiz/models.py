@@ -3,12 +3,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Quiztest(models.Model): # test in mcd
-    difficulty_test = models.CharField("difficulté du test", max_length=50)
-    questions = models.ManyToManyField(Question)
-    users = models.ManyToManyField(Utilisateur)
-
-
 class Question(models.Model):
     type_question = models.CharField('Type de question', max_length=100)
     question_text = models.CharField(max_length=500)
@@ -20,12 +14,15 @@ class Reponses(models.Model):
     answers = models.CharField('Réponses', max_length=100)
     correct_answer = models.CharField('Réponse correct', max_length=100)
 
-
 class Utilisateur(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) #usernam, mdp, email
     score_actuel = models.IntegerField()
     niveau_actuel = models.CharField('Niveau', max_length=50)
 
+class Quiztest(models.Model): # test in mcd
+    difficulty_test = models.CharField("difficulté du test", max_length=50)
+    questions = models.ManyToManyField(Question)
+    users = models.ManyToManyField(Utilisateur)
 
 class Devoirs(models.Model):
     users = models.ManyToManyField(Utilisateur)
