@@ -25,12 +25,12 @@ class Quiztest(models.Model): # test in mcd
     questions = models.ManyToManyField(Question)
     users = models.ManyToManyField(Utilisateur)
 
-class Devoirs(models.Model):
-    users = models.ManyToManyField(Utilisateur)
+class Devoir(models.Model):
     type_devoir = models.CharField("Type de devoir", max_length=100)
-    duree = models.IntegerField("durée estimée")
     difficulty_devoir = models.CharField("niveau du devoir",max_length=50)
+    duree = models.IntegerField("durée estimée")
     contenu = models.FileField(upload_to='devoirs/%Y/%m/%d/',null=True)
+    users = models.ManyToManyField(Utilisateur)
 
 
 class Progres(models.Model):
