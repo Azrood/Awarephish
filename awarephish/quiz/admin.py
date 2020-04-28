@@ -18,7 +18,15 @@ class QuestionAdmin(admin.ModelAdmin):
     ]
     inlines = [ReponsesAdmin]
 
+class DevoirAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,
+            {'fields':[('type_devoir','difficulty_devoir')]}),
+        ("Contenu",
+            {'fields':['duree','contenu','texte']}),
+    ]
+
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Quiztest)
 admin.site.register(Utilisateur)
-admin.site.register(Devoir)
+admin.site.register(Devoir, DevoirAdmin)
