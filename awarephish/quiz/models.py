@@ -8,6 +8,7 @@ class Question(models.Model):
     question_text = models.CharField(max_length=500)
     difficulty = models.CharField('Difficulté', max_length=10)
     note = models.SmallIntegerField()
+    image = models.ImageField(upload_to='questions', null=True)
 
 class Reponses(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -29,6 +30,7 @@ class Devoirs(models.Model):
     type_devoir = models.CharField("Type de devoir", max_length=100)
     duree = models.IntegerField("durée estimée")
     difficulty_devoir = models.CharField("niveau du devoir",max_length=50)
+    contenu = models.FileField(upload_to='devoirs/%Y/%m/%d/',null=True)
 
 
 class Progres(models.Model):
