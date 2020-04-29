@@ -1,0 +1,165 @@
+{% load static %}<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Bienvenue !</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+		<noscript>
+			<link rel="stylesheet" href="css/skel-noscript.css" />
+			<link rel="stylesheet" href="css/style.css" />
+		</noscript>
+	</head>
+	<body class="homepage">
+		<div id="wrapper">
+			<div id="header">
+				<div class="container"> 
+					
+					<!-- Logo -->
+					<div id="logo">
+						<h1><a href="{% url 'index'%}">Phishing</a></h1>
+						<span>Pour ne pas tomber dans le piège !</span>
+					</div>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li class="active"><a href="{% url 'index'%}">page d'accueil</a></li>
+							<li><a href="conseils.html">conseils</a></li>
+							<li><a href="phishing-quiz.html">testez-vous</a></li>
+							<li><a href="{% url 'signup' %}">s'inscrire</a></li>
+							<li><a href="signin.html">se connecter</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<!-- /Header -->
+			
+			<div id="page">
+				<div class="container">
+					<div class="row">
+						<div class="3u">
+							<section id="sidebar1">
+								<header>
+									<h2>Quelques chiffres</h2>
+								</header>
+								<ul class="style3">
+									<li class="first">
+										<p class="date">156 millions</p>
+										<p>de courriels d’hameçonnage sont envoyés chaque jour</p>
+									</li>
+									<li>
+										<p class="date">16 millions</p>
+										<p>de courriels d’hameçonnage parviennent à déjouer les filtres.</p>
+									</li>
+									<li>
+										<p class="date">8 millions </p>
+										<p>de courriels d’hameçonnage sont finalement ouverts.</p>
+									</li>
+									<li>
+										<p class="date">800 000 liens </p>
+										<p>sont cliqués par les destinataires.</p>
+									</li>
+									<li>
+										<p class="date">80 000 personnes </p>
+										<p>mordent à l’hameçon et partagent leurs renseignements personnels.</p>
+									</li>
+								</ul>
+							</section>
+						</div>
+						<div class="6u skel-cell-important">
+							<section id="content" >
+								<header>
+									<h2>C'est quoi le Phishing ? </h2>
+								</header>
+								<p>Le <strong>Phishing</strong> est l’envoi de faux courriels non sollicités dans lesquels on demande aux destinataires,
+								sous différents prétextes, de cliquer sur un lien menant vers un faux site Web ou d’ouvrir une pièce jointe malveillante.
+								Le pirate y récupère les renseignements fournis et les utilise pour détourner des fonds à son avantage.
+								Le faux site Web, tout comme le courriel, semble authentique,
+								car il est souvent une copie conforme du site de l’institution financière ou de l’entreprise. 
+								<p>La raison principale pour laquelle ces attaques sont si réussies,
+                                   c’est les utilisateurs eux-mêmes, puisque la plupart d’entre eux n’est pas suffisamment
+                                   formé sur la façon de reconnaître le phishing. Ainsi, notre site web vise la sensibilisation aux menaces du phishing pour minimiser les pertes.
+								   nous vous proposons de prendre le test de niveau, pour tester vos connaissances et savoir jusqu'à quel point vous êtes capables à determiner si un mail
+								   est frauduleux. Nous vous proposerons aussi des devoirs à faire pour que vous puissiez améliorer vos connaissances sur ce sujet.
+								   
+								<a href="#" class="button">Lire l'article complète</a>
+								<a href="#" class="button">Prendre le test de niveau</a>
+							</section>
+						</div>
+						
+						<!-- <div class="3u">
+							<section id="sidebard2">
+								<header>
+									<h2>Sidebar 2</h2>
+								</header>
+								<ul class="style1">
+									<li class="first"><span class="fa fa-check"></span><a href="#">Maecenas luctus lectus at sapien</a></li>
+									<li><span class="fa fa-check"></span><a href="#">Etiam rhoncus volutpat erat</a></li>
+									<li><span class="fa fa-check"></span><a href="#">Donec dictum metus in sapien</a></li>
+									<li><span class="fa fa-check"></span><a href="#">Integer gravida nibh quis urna</a></li>
+									<li><span class="fa fa-check"></span><a href="#">Etiam posuere augue sit amet nisl</a></li>
+									<li><span class="fa fa-check"></span><a href="#">Mauris vulputate dolor nibh</a></li>
+									<li><span class="fa fa-check"></span><a href="#">Nulla luctus eleifend purus</a></li>
+								</ul>
+								<a href="#" class="button">Full Article</a>
+							</section>
+						</div> -->
+					</div>
+
+				</div>	
+			</div>
+
+			<!-- Footer -->
+			<div id="footer">
+				<div class="container">
+					<div class="row">
+						<div class="3u">
+							<section id="box1">
+								<header>
+									<h2>actualités</h2>		
+								</header>
+								<ul class="style3">
+									<li class="first">
+										<p class="date"><a href="#">FBI 2019 </a></p>
+										<p><a href="https://pdf.ic3.gov/2019_IC3Report.pdf">FBI internet crime report </a></p>
+									</li>
+								
+								</ul>
+							</section>
+						</div>
+						<div class="6u">
+							<section id="box2">
+								<header>
+									<h2>pour savoir plus </h2>
+								</header>
+								<div> <a href="#" class="image full"><img src="{% static 'quiz/images/dontTakeTheBite.jpg' %}" alt=""></a> </div>
+							</section>
+						</div>
+						<div class="3u">
+							<section id="box3">
+								<header>
+									<h2>des articles externes</h2>
+								</header>
+								<ul class="style1">
+									<li class="first"><a href="https://fr.malwarebytes.com/phishing/">Qu'est-ce que l'hameçonnage ? Types et exemples d'attaques par hameçonnage</a></li>
+									<li><a href="https://www.kaspersky.fr/resource-center/definitions/spear-phishing">Qu'est-ce que le phishing ciblé ?</a></li>
+									<!--<li><a href="#">Phasellus nec dictum metus in sapien pellentesque congue.</a></li>
+									<li><a href="#">Cras vitae metus aliquam risus dictum metus in sapien pharetra.</a></li>
+									<li><a href="#">Duis non dictum metus in sapien ante in metus commodo euismod lobortis.</a></li> -->
+								</ul>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
+		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
+		<script src="{%static 'quiz/js/init.js' %}"></script>
+	</body>
+</html>
