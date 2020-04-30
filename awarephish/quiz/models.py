@@ -16,7 +16,7 @@ class Question(models.Model):
 class Reponses(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answers = models.CharField('Réponses', max_length=100)
-    correct_answer = models.CharField('Réponse correct', max_length=100)
+    correct_answer = models.CharField('Réponse correct', max_length=100, blank=True)
 
 class Devoir(models.Model):
     type_devoir = models.CharField("Type de devoir", max_length=100)
