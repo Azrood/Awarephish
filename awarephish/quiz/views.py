@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import SignupForm, SigninForm
-
+from .models import Utilisateur
 # Create your views here.
 
 def redir(request):
@@ -22,6 +22,7 @@ def signup(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
+            Utilisateur(user=user, score_actuel=0).save()
             login(request, user)
             return redirect('/index/')
     else:
