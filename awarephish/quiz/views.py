@@ -1,11 +1,11 @@
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.contrib import messages
+import random
+
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import SignupForm, SigninForm
-from .models import Utilisateur
+from .models import Utilisateur, Question
 # Create your views here.
 
 def redir(request):
@@ -53,6 +53,12 @@ def conseils(request):
     return render(request,'quiz/conseils.html')
 
 def account(request):
-    print(request.is_ajax())
-    print(dir(request))
     return render(request,'quiz/account.html')
+
+def level_quiz(request):
+    r=set(Question.objects.all())
+    phishset = random.sample(r,2)
+    quiz = {question : {reponse : reponse.correct_answer for reponse in question.reponses_set.all()} for question in phishset}
+    return render(request,'quiz/level-quiz.html',{'quiz':quiz})
+
+
