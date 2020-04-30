@@ -3,4 +3,3 @@
 __pycache__/
 *.sqlite3*
 migrations/
-frontend/
