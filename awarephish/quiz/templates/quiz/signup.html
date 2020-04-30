@@ -20,8 +20,8 @@
 					
 					<!-- Logo -->
 					<div id="logo">
-						<h1><a href="#">Synchronous</a></h1>
-						<span>Design by TEMPLATED</span>
+						<h1><a href="{% url 'index'%}">AwarePhish</a></h1>
+						<span>Pour ne pas tomber dans le piège !</span>
 					</div>
 					
 					<!-- Nav -->
@@ -32,7 +32,7 @@
 							<li><a href="phishing-quiz.html">testez-vous</a></li>
 							<li class="active">
 								{% if user.is_authenticated %}
-									<a href="{% url 'signup' %}">Compte</a></li>
+									<a href="{% url 'account' %}">Compte</a></li>
 								{% else %}
 									<a href="{% url 'signup' %}">S'inscrire</a>
 								{% endif%}
@@ -53,15 +53,15 @@
 			<div id="page">
 				<div class="container">
 					<div class="row">
-						<div class="-2u skel-cell-important">
+						<div class="-3u skel-cell-important">
 							<section id="content" >
 								<header>
 									<h2>Inscription</h2>
 								</header>
-								<div class="12u skel-cell-important">
+								<div class="9u skel-cell-important row">
 									<form method="POST">{% csrf_token %}
 										{{ form.as_p }}
-										<input type="submit" value="signup" class="button">
+										<input type="submit" value="S'inscrire" class="button">
 									</form>
 								</div>
 							</section>

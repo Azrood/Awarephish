@@ -51,4 +51,7 @@ def signout(request):
 def conseils(request):
     return render(request,'quiz/conseils.html')
 
-@login_required
+def account(request):
+    print(request.is_ajax())
+    print(dir(request))
+    return render(request,'quiz/account.html')

@@ -27,18 +27,30 @@
 					
 					<!-- Logo -->
 					<div id="logo">
-						<h1><a href="#">Synchronous</a></h1>
-						<span>Design by TEMPLATED</span>
+						<h1><a href="{% url 'index'%}">AwarePhish</a></h1>
+						<span>Pour ne pas tomber dans le piège !</span>
 					</div>
 					
 					<!-- Nav -->
 					<nav id="nav">
 						<ul>
-							<li><a href="index.html">page d'accueil</a></li>
-							<li><a href="conseils.html">conseils</a></li>
+							<li><a href="{% url 'index'%}">page d'accueil</a></li>
+							<li><a href="{% url 'conseils' %}">conseils</a></li>
 							<li><a href="phishing-quiz.html">testez-vous</a></li>
-							<li><a href="{% url 'signup' %}">s'inscrire</a></li>
-							<li class="active"><a href="{% url 'signin' %}">se connecter</a></li>
+							<li class="active">
+								{% if user.is_authenticated %}
+									<a href="{% url 'account' %}">Compte</a></li>
+								{% else %}
+									<a href="{% url 'signup' %}">S'inscrire</a>
+								{% endif%}
+							</li>
+							<li>
+								{% if user.is_authenticated %}
+									<a href="{% url 'signout' %}">Se déconnecter</a>
+								{% else %}
+									<a href="{% url 'signin' %}">Se connecter</a>
+								{%endif%}
+							</li>
 						</ul>
 					</nav>
 				</div>
@@ -54,10 +66,7 @@
 									<h2>Connexion</h2>
 								</header>
 								<div class="12u skel-cell-important">
-									<form method="POST">{% csrf_token %}
-										{{ form.as_p }}
-										<input type="submit" value="signup" class="button">
-									</form>
+									<p>bleh</p>
 								</div>
 							</section>
 						</div>
