@@ -1,5 +1,6 @@
 import random
 
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -50,7 +51,7 @@ def signout(request):
     return redirect('/index/')
 
 def conseils(request):
-    return render(request,'quiz/conseils.html')
+    return render(request,'quiz/conseil.html')
 
 def account(request):
     return render(request,'quiz/account.html')
@@ -60,5 +61,17 @@ def level_quiz(request):
     phishset = random.sample(r,2)
     quiz = {question : {reponse : reponse.correct_answer for reponse in question.reponses_set.all()} for question in phishset}
     return render(request,'quiz/level-quiz.html',{'quiz':quiz})
+
+def result(request):
+    user_answers = [k for k,v in request.POST.items() if 'csrfmiddle' not in k][:-1]
+    question_ids=[int(x) for x in request.POST.get('id').split(",")[:-1]]
+    score=0
+    for id in question_ids:
+        question=get_object_or_404(Question, pk=id)
+        for answer in user_answers:
+            if question.reponses_set.filter(answers=answer):
+                print(answer)
+    return JsonResponse({'status':1,'result':"<p>bravo votre resultat est 5 vous avez un niveau NUL</p>"})
+
 
 
