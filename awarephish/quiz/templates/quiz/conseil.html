@@ -1,0 +1,198 @@
+{% load static %}<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Conseils à propos du phishing !</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
+		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
+		<script src="{%static 'quiz/js/init.js' %}"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel-noscript.css" />
+			<link rel="stylesheet" href="css/style.css" />
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+	</head>
+	<body>
+		<div id="wrapper">
+			
+			<!-- Header -->
+			<div id="header">
+				<div class="container"> 
+					
+					<!-- Logo -->
+					<div id="logo">
+						<h1><a href="#">Phishing</a></h1>
+						<span>Pour ne pas tomber dans la piège !</span>
+					</div>
+					
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="{% url 'index'%}">page d'accueil</a></li>
+							<li class="active"><a href="{% url 'conseils' %}">conseils</a></li>
+							<li><a href="phishing-quiz.html">testez-vous</a></li>
+							<li>
+								{% if user.is_authenticated %}
+									<a href="{% url 'account' %}">Compte</a></li>
+								{% else %}
+									<a href="{% url 'signup' %}">S'inscrire</a>
+								{% endif%}
+							</li>
+							<li>
+								{% if user.is_authenticated %}
+									<a href="{% url 'signout' %}">Se déconnecter</a>
+								{% else %}
+									<a href="{% url 'signin' %}">Se connecter</a>
+								{%endif%}
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<!-- /Header -->
+				
+			<div id="page">
+				<div class="container">
+					<div class="row">
+						<div class="6u skel-cell-important">
+							<section id="content" >
+								<p>Le phishing est une escroquerie en ligne à l'aide de faux e-mails, sites Internet ou messages qui vise à voler
+								des informations personnelles et à espionner les individus, les entreprises et les organisations.
+								Pour se protéger, il faut apprendre les techniques qui permettent de reconnaître ces faux e-mails et faire la distinction entre 
+								les faux et les vrais messages. Nous présentons ici quelques conseils pour vous aider à juger si vous pouvez faire confiance à un message ou non.</p>
+
+								<h2><strong>C'est quoi Le principe de base ?</strong></h2>
+								<p>Les escrocs tentent toujours d'exploiter votre crédulité et votre confiance en certaines personnes.
+								Souvent, ils essaient aussi de profiter de vos emotions surtout la peur et la joie et d'ajouter le caractère d'urgence sur leurs messages.
+								Ne vous laissez pas berner !</p>
+								
+								<h3><strong>Nos conseils</strong></h3>
+
+								<p>Si vous recevez un message qui contient des liens ou des pièces jointes, ou un coup de téléphone qui vous semble suspect,
+								essayez de répondre à ces questions avant de commencer à réagir.</p>
+
+								<ul><li>         Vous attendiez ce message ou ce coup de téléphone ?</li>
+								</ul><p>Si vous recevez sans raison un message de ce correspondant, si vous n’avez rien acheté, si vous n'êtes pas client de cette banque, etc.
+								Alors, il faut vérifier l'authenticité du message.</p>
+								
+								<ul><li>         Connaissez-vous l’expéditeur ?</li>
+								</ul><p>Si le message semble provenir d'une personne ou d'une agence que vous connaissez (votre patron, votre ami, votre banque,...),
+								contrôlez l’adresse e-mail et vérifiez si elle est la même adresse utilisée par la personne que vous connaissez, 
+								et si cette adresse ne contient pas des fautes d’orthographe. Autrement, c'est fort probable qu'il s'agit d'un message de phishing.
+								Mais attention, une adresse e-mail légitime n’offre toujours pas de garanties quant à la véracité de l’e-mail.</p>
+
+								<ul><li>         Le message a-t-il un caractère alarmiste ?</li>
+								</ul><p>Si le message contient des expressions comme "Votre compte expire bientôt", "C'est urgent, vous devez réinitialiser votre mot de passe
+								le plus tôt possible", ou si c'est un message de votre patron qui vous demande de faire un virement bancaire urgent alors c'est un email suspect.
+								Ainsi, gardez votre sang-froid et prenez votre temps pour vérifier l'authenticité de l'expéditeur.</p> 
+								
+								<ul><li>         Le message joue-t-il sur vos émotions ?</li>
+								</ul><p>Si vous recevez un message profitant de vos sentiments et qui contient des expressions comme "Félicitations.
+								Vous avez gagné un iPhone X. Cliquez sur le lien pour obtenir votre cadeau", ou "Nous regrettons de vous informer que votre compte PayPal a été piraté.
+								Pour éviter toute perte financière, vous devez cliquer sur le lien et réinitialiser votre mot de passe immédiatement avant que les pirates
+								peuvent voler votre argent". Alors, il faut vérifier l'authenticité de ce message avant de commencer à réagir.</p>
+								
+								<ul><li>         Est-ce que quelqu’un essaie d'éveiller votre curiosité ?</li>
+								</ul><p>En recevant des messages comprenant un lien dont le titre est « Regardez ce que j’ai lu sur vous… » ou
+								« Est-ce bien vous sur cette photo ? », il est naturel d'être curieux. Mais attaention, ne tombez surtout pas dans le panneau.</p>
+								
+								<ul><li>         Où mène le lien sur lequel on vous incite à cliquer ?</li>
+								</ul><p>C'est très important. Placez votre curseur sur le lien sans cliquer. Le nom de domaine, c'est-à-dire le mot qui précède .be, .com, .eu,
+								.org et la première barre oblique « / », correspond-il réellement au nom de l’organisation ? 
+								Par exemple, dans le lien www.phishing.conseils.be/phishing, le domaine est « conseils »,
+								ce lien vous dirige vers un site Internet différent .<br />
+
+
+								<ul><li>         Est-ce que le message est mal orthographié ?</li>
+								</ul><p>Si le message contient des erreurs d'orthographe ou des fautes de grammaire, alors, faites attention,
+								il est peut être un message de phishing. En effet, même si les cybercriminels malins s’efforcent d’utiliser 
+								un langage correct, des fautes ou l’emploi d’une langue étrangère peuvent être le signe d’un message suspect. </p>
+								
+								
+								<ul><li>         Est-ce que l’e-mail s’adresse à vous personnellement ? </li>
+								</ul><p>Il vaut mieux se méfier des messages dont le titre général est vague ou dont le titre est votre adresse e-mail.</p>
+
+
+								<ul><li>         Le message se trouve-t-il dans votre dossier Spam/Junk/Indésirables ? </li>
+								</ul><p>Si oui, soyez particulièrement prudents. Vous pouvez marquer vous-mêmes un message suspect comme « Spam » ou « Junk » ou
+								« Indésirable » et avertir ainsi d’autres utilisateurs.</p>
+
+		
+								<h3><strong>Que faire en cas où vous avez des doutes?</strong></h3>
+								<p> Si le message vous parait frauduleux, vous devez éviter de cliquer sur les liens et d'insérer vos informations ou de télécharger les pièces jointes.
+								Il est préférable de chercher le site via un moteur de recherche et de ne transférer pas le lien à vos contacts.
+								De plus, si le message est envoyé par une personne que vous connaissez, il serait important de la questionner s'elle est bien l'expéditeur:
+									<ul><li>S’il s’agit d’un ami, vous pouvez l’appeler, envoyer un SMS ou envoyer un message via les réseaux sociaux. 
+									Si le message ne provient pas de votre ami, prévenez-le que son compte a été piraté.
+									Sur certains réseaux sociaux, vous pouvez signaler des messages.</li>
+									<li>S’il s’agit d’une organisation ou d’une entreprise, allez sur leur site et contrôlez si l’action « urgente » dont il est question existe
+									réellement. Si vous ne trouvez rien, vous pouvez toujours leur téléphoner.</li>
+									</ul>
+									
+								<h3><strong>Si vous avez déja tombé dans la piège?</strong></h3>	 
+								<ul><li>Si vous avez communiqué un mot de passe que vous utilisez pour d’autres sites, modifiez-le immédiatement.</li>
+								<li>Si vous avez communiqué vos coordonnées de votre carte de crédit, prévenez immédiatement Cardstop .</li>
+								<li>Si vous avez fait un virement bancaire ou communiqué vos données bancaires ou les pirates ont pu accéder aux vos informations intimes, vous pouvez toujours déclarer.
+								En effet, la RAT, Recovery Asset Team, a aidé, entre 2018 et 2019, à récupérer plus de 300 millions de dollars perdus à la suite d'arnaques en ligne, pour un taux de retour de 79% des pertes signalées.</li>
+								</ul>
+								
+								
+								<p>Faites notre Test Phishing pour découvrir si vous vous laisseriez prendre au piège par des cybercriminels.
+								Vous pouvez aussi suivre une formation pour améliorer vos connaissances.</p>
+								<p> Alors, <a href="#"> testez-vous !! </a> 
+
+
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+		  <!-- Footer -->
+			<div id="footer">
+				<div class="container">
+					<div class="row">
+						<div class="3u">
+							<section id="box1">
+								<header>
+									<h2>actualités</h2>		
+								</header>
+								<ul class="style3">
+									<li class="first">
+										<p class="date"><a>FBI 2019 </a></p>
+										<p><a href="https://pdf.ic3.gov/2019_IC3Report.pdf">FBI internet crime report </a></p>
+									</li>
+								
+								</ul>
+							</section>
+						</div>
+						<div class="6u">
+							<section id="box2">
+								<header>
+									<h2>pour savoir plus </h2>
+								</header>
+								<div> <a href="#" class="image full"><img src="images/dontTakeTheBite.jpg" alt=""></a> </div>
+							</section>
+						</div>
+						<div class="3u">
+							<section id="box3">
+								<header>
+									<h2>des articles externes</h2>
+								</header>
+								<ul class="style1">
+									<li class="first"><a href="https://fr.malwarebytes.com/phishing/">Qu'est-ce que l'hameçonnage ? Types et exemples d'attaques par hameçonnage</a></li>
+									<li><a href="https://www.kaspersky.fr/resource-center/definitions/spear-phishing">Qu'est-ce que le phishing ciblé ?</a></li>
+								</ul>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+	</body>
+</html>
