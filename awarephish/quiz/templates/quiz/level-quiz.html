@@ -6,6 +6,10 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
+		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
+		<script src="{%static 'quiz/js/init.js' %}"></script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel-noscript.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -81,43 +85,29 @@
 								</ul>
 							</section>
 						</div>
-						<div class="6u skel-cell-important">
+						<div class="6u skel-cell-important" id='results'>
 							<section id="content" >
 								<header>
 									<h2>Test de niveau</h2>
 								</header>
+								<form id="level" method="post" class="skel-panels" action="{% url 'result' %}">
+									{% csrf_token %}
 								{%for quest,value in quiz.items %}
 									<h5>{{ quest.question_text }}</h5>
-									<div class="container">
+									<div class="row">
 									<ul>
 									{% for answer in value %}
-										<li><input type="checkbox">{{answer.answers}}</li>
+										<input type="checkbox" name='{{answer.answers}}' id="question{{quest.id}}">
+										<label for="question{{quest.id}}">{{answer.answers}}</label>
 										{% endfor %}
 
 									</ul></div>
 								{% endfor %}
-								<a href="#" class="button">Lire l'article complète</a>
-								<a href="#" class="button">Prendre le test de niveau</a>
+								<input type="submit" value="Valider">
+							</form>
 							</section>
 						</div>
-						
-						<!-- <div class="3u">
-							<section id="sidebard2">
-								<header>
-									<h2>Sidebar 2</h2>
-								</header>
-								<ul class="style1">
-									<li class="first"><span class="fa fa-check"></span><a href="#">Maecenas luctus lectus at sapien</a></li>
-									<li><span class="fa fa-check"></span><a href="#">Etiam rhoncus volutpat erat</a></li>
-									<li><span class="fa fa-check"></span><a href="#">Donec dictum metus in sapien</a></li>
-									<li><span class="fa fa-check"></span><a href="#">Integer gravida nibh quis urna</a></li>
-									<li><span class="fa fa-check"></span><a href="#">Etiam posuere augue sit amet nisl</a></li>
-									<li><span class="fa fa-check"></span><a href="#">Mauris vulputate dolor nibh</a></li>
-									<li><span class="fa fa-check"></span><a href="#">Nulla luctus eleifend purus</a></li>
-								</ul>
-								<a href="#" class="button">Full Article</a>
-							</section>
-						</div> -->
+
 					</div>
 
 				</div>	
@@ -166,12 +156,31 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
-		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
-		<script src="{%static 'quiz/js/init.js' %}"></script>
+		
+		<script type="text/JavaScript">
+			$('#level').submit(function(e){
+				e.preventDefault();
+				let form = this;
+				console.log(
+						$(form).serialize()+"&id=1,2,3");
+				$.ajax({
+					type: "POST",
+					url: {%url 'result' %},
+					csrfmiddlewaretoken: "{{ csrf_token }}",
+					data:$(form).serialize()+"&id={% for q,v in quiz.items%}{{q.id}},{%endfor%}",
+					success: function(data) {
+						alert("good");
+						console.log(data.result);
+					},
+					error: function(data) {
+						console.log('error');
+						console.log(data);
+					},
+				});
+
+				
+			});
+		</script>
 	</body>
 </html>
