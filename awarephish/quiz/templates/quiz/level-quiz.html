@@ -98,7 +98,8 @@
 									<ul>
 									{% for answer in value %}
 										<input type="checkbox" name='{{answer.answers}}' id="question{{quest.id}}">
-										<label for="question{{quest.id}}">{{answer.answers}}</label>
+										{% if answer.wrong_answers %}<label for="question{{quest.id}}">{{answer.wrong_answers}}</label>{% endif %}
+										{% if answer.correct_answer %}<label for="question{{quest.id}}">{{answer.correct_answer}}</label>{% endif %}
 										{% endfor %}
 
 									</ul></div>

@@ -15,8 +15,8 @@ class Question(models.Model):
 
 class Reponses(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answers = models.CharField('Réponses', max_length=100)
-    correct_answer = models.CharField('Réponse correct', max_length=100, blank=True)
+    wrong_answers = models.CharField('Réponses Incorrectes', max_length=100, null=True)
+    correct_answer = models.CharField('Réponses correctes', max_length=100, null=True)
 
 class Devoir(models.Model):
     type_devoir = models.CharField("Type de devoir", max_length=100)
@@ -34,8 +34,8 @@ class Utilisateur(models.Model):
     score_actuel = models.IntegerField(default=0)
     niveau_actuel = models.CharField('Niveau', max_length=50, default='Débutant')
     homework = models.ManyToManyField(Devoir,blank=True)
-    total_question = models.IntegerField("nombre total de réponse", default=0)
-    total_questions_correctes = models.IntegerField("nombre de total de réponses correcte", default=0)
+    total_reponse = models.IntegerField("nombre total de reponse", default=0)
+    total_reponse_correctes = models.IntegerField("nombre de total de reponse correcte", default=0)
     def __str__(self):
         return str(self.user)
 
