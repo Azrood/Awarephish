@@ -4,7 +4,7 @@ from .models import Question, Quiztest, Reponses, Devoir, Utilisateur
 # Register your models here.
 class ReponsesAdmin(admin.TabularInline):
     model = Reponses
-    extra = 2
+    extra = 1
 
 
 class QuestionAdmin(admin.ModelAdmin):

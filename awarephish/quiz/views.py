@@ -1,4 +1,5 @@
 import random
+import datetime
 
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -6,7 +7,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import SignupForm, SigninForm
-from .models import Utilisateur, Question
+from .models import Utilisateur, Question, Progres, Quiztest
 # Create your views here.
 
 def redir(request):
@@ -57,21 +58,47 @@ def account(request):
     return render(request,'quiz/account.html')
 
 def level_quiz(request):
-    r=set(Question.objects.all())
+    r = set(Question.objects.all())
     phishset = random.sample(r,2)
     quiz = {question : {reponse : reponse.correct_answer for reponse in question.reponses_set.all()} for question in phishset}
     return render(request,'quiz/level-quiz.html',{'quiz':quiz})
 
 def result(request):
     user_answers = [k for k,v in request.POST.items() if 'csrfmiddle' not in k][:-1]
-    question_ids=[int(x) for x in request.POST.get('id').split(",")[:-1]]
-    score=0
-    for id in question_ids:
-        question=get_object_or_404(Question, pk=id)
+    question_ids=[ int(x) for x in request.POST.get('id').split(",")[:-1] ]
+    userscore=0
+    scoretest=0
+    for questid in question_ids:
+        question = get_object_or_404(Question, pk=questid)
+        score = question.note / question.reponses_set.filter(correct_answer__isnull=False).count()
+        print(question.reponses_set.filter(correct_answer__isnull=False))
+        scoretest+= question.note
+        print(score,question.note,scoretest)
         for answer in user_answers:
             if question.reponses_set.filter(answers=answer):
-                print(answer)
+                if question.reponses_set.filter(correct_answer=answer):
+                    userscore+=score
+                else:
+                    pass
+    print(userscore,scoretest,userscore/scoretest)
+                
+                
     return JsonResponse({'status':1,'result':"<p>bravo votre resultat est 5 vous avez un niveau NUL</p>"})
 
+@login_required(login_url='/signin/')
+def phishquiz(request):
+    user = get_object_or_404(Utilisateur, user=request.user)
+    quiz = random.choice(Quiztest.objects.filter(difficulty_test=user.niveau_actuel))
+    return render(request,'quiz/phishing-quiz.html',{'quiz':quiz})
+
+def resultquiz(request):
+    #TODO: calculate result and save score
+    user = get_object_or_404(Utilisateur, user=request.user)
+    quiztest_id = int(request.POST.get('id'))
 
 
+    
+#TODO : HOW TO GIVE HOMEWORK ????
+@login_required
+def progress(request):
+    return NotImplemented
