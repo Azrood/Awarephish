@@ -39,11 +39,23 @@
 					<!-- Nav -->
 					<nav id="nav">
 						<ul>
-							<li><a href="index.html">page d'accueil</a></li>
-							<li><a href="conseils.html">conseils</a></li>
-							<li class="active"><a href="phishing-quiz.html">testez-vous</a></li>
-							<li><a href="signup.html">s'inscrire</a></li>
-							<li><a href="signin.html">se connecter</a></li>
+							<li><a href="{% url 'index'%}">page d'accueil</a></li>
+							<li><a href="{% url 'conseils' %}">conseils</a></li>
+							<li class="active"><a href="{% url 'phishquiz' %}">testez-vous</a></li>
+							<li>
+								{% if user.is_authenticated %}
+									<a href="{% url 'account' %}">Compte</a></li>
+								{% else %}
+									<a href="{% url 'signup' %}">S'inscrire</a>
+								{% endif%}
+							</li>
+							<li>
+								{% if user.is_authenticated %}
+									<a href="{% url 'signout' %}">Se déconnecter</a>
+								{% else %}
+									<a href="{% url 'signin' %}">Se connecter</a>
+								{%endif%}
+							</li>
 						</ul>
 					</nav>
 				</div>
@@ -113,7 +125,7 @@
 								<header>
 									<h2>Donec dictum metus</h2>
 								</header>
-								<div> <a href="#" class="image full"><img src="images/pics02.jpg" alt=""></a> </div>
+								<div> <a href="#" class="image full"><img src="{% static 'quiz/images/dontTakeTheBite.jpg' %}" alt=""></a> </div>
 								<p>Nulla enim eros, porttitor eu, tempus id, varius non, nibh. Duis enim nulla, luctus eu, dapibus lacinia, venenatis id, quam. Vestibulum imperdiet, magna nec eleifend rutrum, nunc lectus vestibulum velit, euismod lacinia quam nisl id lorem. Quisque erat. Vestibulum pellentesque, justo mollis pretium suscipit, justo nulla blandit libero, in blandit augue justo quis nisl.</p>
 							</section>
 						</div>
