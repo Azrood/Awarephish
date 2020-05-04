@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.utils import timezone
 
 from .forms import SignupForm, SigninForm
 from .models import Utilisateur, Question, Progres, Quiztest
@@ -108,6 +109,7 @@ def resultquiz(request):
                 if question.reponses_set.filter(correct_answer=answer):
                     score += answer_score
                     nbr_reponse_correcte += 1
+                    nbr_reponse += 1
                 else:
                     nbr_reponse += 1
 
@@ -119,11 +121,17 @@ def resultquiz(request):
     user.niveau_actuel = evaluate_level(user.score_actuel)
     user.save()
 
-    #TODO : save stuff restant in database
-    return JsonResponse({'status':1})
+    user.progres_set.create(date_test=timezone.now(), score_test=score)
+
+    return JsonResponse({'status':1, 'result':score, 'level':user.niveau_actuel})
 
     
 #TODO : HOW TO GIVE HOMEWORK ????
 @login_required
 def progress(request):
-    return NotImplemented
+    user = get_object_or_404(Utilisateur, user=request.user)
+    prog = { 
+            'x':[p.date_test for p in user.progres_set.all()],
+            'y': [p.score_test for p in user.progres_set.all()],
+    }
+    return JsonResponse({'status':1, 'progress':prog})

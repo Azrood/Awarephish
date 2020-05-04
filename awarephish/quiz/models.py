@@ -49,6 +49,8 @@ class Progres(models.Model):
     date_test = models.DateTimeField("Date de test")
     score_test = models.IntegerField()
 
+    def __str__(self):
+        return str(self.user)
 
 
 

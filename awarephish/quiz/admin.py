@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Quiztest, Reponses, Devoir, Utilisateur
+from .models import Question, Quiztest, Reponses, Devoir, Utilisateur, Progres
 
 # Register your models here.
 class ReponsesAdmin(admin.TabularInline):
@@ -30,3 +30,4 @@ admin.site.register(Question, QuestionAdmin)
 admin.site.register(Quiztest)
 admin.site.register(Utilisateur)
 admin.site.register(Devoir, DevoirAdmin)
+admin.site.register(Progres)
