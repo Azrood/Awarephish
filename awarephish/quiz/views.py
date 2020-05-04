@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from .forms import SignupForm, SigninForm
 from .models import Utilisateur, Question, Progres, Quiztest
@@ -64,6 +65,7 @@ def level_quiz(request):
     return render(request,'quiz/level-quiz.html',{'quiz':quiz})
 
 def result(request):
+    print({k:v for k,v in request.POST.items()})
     user_answers = [k for k,v in request.POST.items() if 'csrfmiddle' not in k][:-1]
     question_ids=[ int(x) for x in request.POST.get('id').split(",")[:-1] ]
     userscore=0
@@ -75,11 +77,11 @@ def result(request):
         scoretest+= question.note
         print(score,question.note,scoretest)
         for answer in user_answers:
-            if question.reponses_set.filter(answers=answer):
+            if question.reponses_set.filter(Q(wrong_answers=answer) | Q(correct_answer=answer)):
                 if question.reponses_set.filter(correct_answer=answer):
-                    userscore+=score
+                    print("yes)")
                 else:
-                    pass
+                    print("nop")
     print(userscore,scoretest,userscore/scoretest)
                 
                 
