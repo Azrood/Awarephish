@@ -98,6 +98,8 @@ def resultquiz(request):
     user_answers = get_user_answers(request)
     score = 0
     scoretest = 0
+    nbr_reponse, nbr_reponse_correcte = 0,0
+
     for question in questions:
         answer_score = question.note / question.reponses_set.filter(correct_answer__isnull=False).count()
         scoretest+= question.note
@@ -105,9 +107,19 @@ def resultquiz(request):
             if question.reponses_set.filter(Q(wrong_answers=answer) | Q(correct_answer=answer)):
                 if question.reponses_set.filter(correct_answer=answer):
                     score += answer_score
+                    nbr_reponse_correcte += 1
+                else:
+                    nbr_reponse += 1
 
     score = round(score/scoretest,2)*10
-    level = evaluate_level(score)
+
+    user.score_actuel = round((user.score_actuel + score) / 2, 2)
+    user.total_reponse += nbr_reponse
+    user.total_reponse_correctes += nbr_reponse_correcte
+    user.niveau_actuel = evaluate_level(user.score_actuel)
+    user.save()
+
+    #TODO : save stuff restant in database
     return JsonResponse({'status':1})
 
     
