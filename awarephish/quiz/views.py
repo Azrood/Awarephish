@@ -9,6 +9,7 @@ from django.db.models import Q
 
 from .forms import SignupForm, SigninForm
 from .models import Utilisateur, Question, Progres, Quiztest
+from .utils import evaluate_level, get_user_answers
 # Create your views here.
 
 def redir(request):
@@ -60,31 +61,27 @@ def account(request):
 
 def level_quiz(request):
     r = set(Question.objects.all())
+    #TODO : replace 2 with appropriate (and take from each 'niveau')
     phishset = random.sample(r,2)
     quiz = {question : {reponse : reponse.correct_answer for reponse in question.reponses_set.all()} for question in phishset}
     return render(request,'quiz/level-quiz.html',{'quiz':quiz})
 
 def result(request):
-    print({k:v for k,v in request.POST.items()})
-    user_answers = [k for k,v in request.POST.items() if 'csrfmiddle' not in k][:-1]
+    #TODO : return proper result
+    user_answers = get_user_answers(request)
     question_ids=[ int(x) for x in request.POST.get('id').split(",")[:-1] ]
-    userscore=0
+    score=0
     scoretest=0
     for questid in question_ids:
         question = get_object_or_404(Question, pk=questid)
-        score = question.note / question.reponses_set.filter(correct_answer__isnull=False).count()
-        print(question.reponses_set.filter(correct_answer__isnull=False))
+        answer_score = question.note / question.reponses_set.filter(correct_answer__isnull=False).count()
         scoretest+= question.note
-        print(score,question.note,scoretest)
         for answer in user_answers:
             if question.reponses_set.filter(Q(wrong_answers=answer) | Q(correct_answer=answer)):
                 if question.reponses_set.filter(correct_answer=answer):
-                    print("yes)")
-                else:
-                    print("nop")
-    print(userscore,scoretest,userscore/scoretest)
-                
-                
+                    score += answer_score
+    score = round(score/scoretest,2)*10
+    level = evaluate_level(score)
     return JsonResponse({'status':1,'result':"<p>bravo votre resultat est 5 vous avez un niveau NUL</p>"})
 
 @login_required(login_url='/signin/')
@@ -94,10 +91,24 @@ def phishquiz(request):
     return render(request,'quiz/phishing-quiz.html',{'quiz':quiz})
 
 def resultquiz(request):
-    #TODO: calculate result and save score
+    # TODO: return proper result
     user = get_object_or_404(Utilisateur, user=request.user)
-    quiztest_id = int(request.POST.get('id'))
 
+    questions = get_object_or_404(Quiztest, pk=int(request.POST.get('id'))).questions.all()
+    user_answers = get_user_answers(request)
+    score = 0
+    scoretest = 0
+    for question in questions:
+        answer_score = question.note / question.reponses_set.filter(correct_answer__isnull=False).count()
+        scoretest+= question.note
+        for answer in user_answers:
+            if question.reponses_set.filter(Q(wrong_answers=answer) | Q(correct_answer=answer)):
+                if question.reponses_set.filter(correct_answer=answer):
+                    score += answer_score
+
+    score = round(score/scoretest,2)*10
+    level = evaluate_level(score)
+    return JsonResponse({'status':1})
 
     
 #TODO : HOW TO GIVE HOMEWORK ????
