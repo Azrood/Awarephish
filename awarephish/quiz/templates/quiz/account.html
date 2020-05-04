@@ -40,7 +40,7 @@
 						<ul>
 							<li><a href="{% url 'index'%}">page d'accueil</a></li>
 							<li><a href="{% url 'conseils' %}">conseils</a></li>
-							<li><a href="phishing-quiz.html">testez-vous</a></li>
+							<li><a href={% if user.is_authenticated %}"{% url 'phishquiz' %}"{% else %}{% url 'signin' %} onclick="return confirm('Vous devez être connecté')"{% endif%}>testez-vous</a></li>
 							<li class="active">
 								{% if user.is_authenticated %}
 									<a href="{% url 'account' %}">Compte</a></li>
