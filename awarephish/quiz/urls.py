@@ -13,4 +13,6 @@ urlpatterns = [
     path('level-quiz/', views.level_quiz, name="level-quiz"),
     path('result/', views.result, name="result"),
     path('phishquiz/', views.phishquiz, name="phishquiz"),
+    path('account/progres', views.progress, name="progres"),
+    path('resultquiz/', views.resultquiz, name="resultquiz"),
 ]

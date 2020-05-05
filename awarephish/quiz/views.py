@@ -68,9 +68,8 @@ def level_quiz(request):
     return render(request,'quiz/level-quiz.html',{'quiz':quiz})
 
 def result(request):
-    #TODO : return proper result
     user_answers = get_user_answers(request)
-    question_ids=[ int(x) for x in request.POST.get('id').split(",")[:-1] ]
+    question_ids=[int(x) for x in request.POST.get('id').split(",")[:-1] ]
     score=0
     scoretest=0
     for questid in question_ids:
@@ -83,13 +82,14 @@ def result(request):
                     score += answer_score
     score = round(score/scoretest,2)*10
     level = evaluate_level(score)
-    return JsonResponse({'status':1,'result':"<p>bravo votre resultat est 5 vous avez un niveau NUL</p>"})
+    return JsonResponse({'status':1,'result':score, "level":level})
 
 @login_required(login_url='/signin/')
 def phishquiz(request):
     user = get_object_or_404(Utilisateur, user=request.user)
-    quiz = random.choice(Quiztest.objects.filter(difficulty_test=user.niveau_actuel))
-    return render(request,'quiz/phishing-quiz.html',{'quiz':quiz})
+    quiztest = random.choice(Quiztest.objects.filter(difficulty_test=user.niveau_actuel))
+    quiz = {quest : {rep.wrong_answers : rep.correct_answer for rep in quest.reponses_set.all()} for quest in quiztest.questions.all()}
+    return render(request,'quiz/phishing-quiz.html',{'quiz':quiz, 'quiztest':quiztest})
 
 def resultquiz(request):
     # TODO: return proper result
