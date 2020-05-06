@@ -90,22 +90,26 @@
 								<header>
 									<h2>Test de niveau</h2>
 								</header>
+					
+								
 								<form id="level" method="post" class="skel-panels" action="{% url 'result' %}">
 									{% csrf_token %}
 								{%for quest,value in quiz.items %}
 									<h5>{{ quest.question_text }}</h5>
 									<div class="row">
-									<ul>
-									{% for answer in value %}
-										
-										{% if answer.wrong_answers %}<input type="checkbox" name='{{answer.wrong_answers}}' id="question{{quest.id}}"><label for="question{{quest.id}}">{{answer.wrong_answers}}</label>{% endif %}
-										{% if answer.correct_answer %}<input type="checkbox" name='{{answer.correct_answer}}' id="question{{quest.id}}"><label for="question{{quest.id}}">{{answer.correct_answer}}</label>{% endif %}
-										{% endfor %}
+										<ul>
+										{% for answer in value %}
+											
+											{% if answer.wrong_answers %}<label for="question{{quest.id}}_{{answer.wrong_answers}}"><input type="checkbox" name='{{answer.wrong_answers}}' id="question{{quest.id}}_{{answer.wrong_answers}}">{{answer.wrong_answers}}</label>{% endif %}
+											{% if answer.correct_answer %}<label for="question{{quest.id}}_{{answer.correct_answer}}"><input type="checkbox" name='{{answer.correct_answer}}' id="question{{quest.id}}_{{answer.correct_answer}}">{{answer.correct_answer}}</label>{% endif %}
+											{% endfor %}
 
-									</ul></div>
+										</ul>
+									</div>
 								{% endfor %}
 								<input type="submit" value="Valider">
 							</form>
+							
 							</section>
 						</div>
 

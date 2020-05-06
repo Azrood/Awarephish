@@ -80,8 +80,8 @@
 									<ul>
 									{% for incorrect,correct in answers.items %}
 										
-										{% if incorrect %}<input type="checkbox" name='{{incorrect}}' id="question{{quest.id}}"><label for="question{{quest.id}}">{{incorrect}}</label>{% endif %}
-										{% if correct %}<input type="checkbox" name='{{correct}}' id="question{{quest.id}}"><label for="question{{quest.id}}">{{correct}}</label>{% endif %}
+										{% if incorrect %}<label for="question{{quest.id}}_{{correct.id}}"><input type="checkbox" name='{{incorrect}}' id="question{{quest.id}}_{{correct.id}}">{{incorrect}}</label>{% endif %}
+										{% if correct %}<label for="question{{quest.id}}_{{incorrect.id}}"><input type="checkbox" name='{{correct}}' id="question{{quest.id}}_{{incorrect.id}}">{{correct}}</label>{% endif %}
 										{% endfor %}
 
 									</ul></div>
