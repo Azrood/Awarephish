@@ -705,6 +705,8 @@ ul.style3 .first {
 	#footer
 	{
 		padding: 5em 0em;
+		background-image:  url(../images/final.jpg);
+		background-position : top 2% right 10%;
 	}
 
 
