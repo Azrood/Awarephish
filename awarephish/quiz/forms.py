@@ -5,10 +5,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 
 class SignupForm(forms.Form):
-    username = forms.CharField(max_length=150, label='Nom d\'utilisateur')
-    password1 = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirmer le mot de passe', widget=forms.PasswordInput)
-    email = forms.EmailField(label='Adresse Email')
+    username = forms.CharField(max_length=150, label='Nom d\'utilisateur', widget=forms.TextInput(attrs={'placeholder':'Entrez le nom d\'utilisateur'}))
+    password1 = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(attrs={'placeholder':'Entrez votre mot de passe'}))
+    password2 = forms.CharField(label='Confirmer le mot de passe', widget=forms.PasswordInput(attrs={'placeholder':'Confirmer votre mot de passe'}))
+    email = forms.EmailField(label='Adresse Email',widget=forms.EmailInput(attrs={'placeholder':'Entrez votre emailr'}))
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
@@ -40,8 +40,8 @@ class SignupForm(forms.Form):
         return user
 
 class SigninForm(AuthenticationForm):
-    username = forms.CharField(max_length=150, label='Nom d\'utilisateur')
-    password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
+    username = forms.CharField(max_length=150, label='Nom d\'utilisateur', widget=forms.TextInput(attrs={'placeholder':'Entrez le nom d\'utilisateur'}))
+    password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(attrs={'placeholder':'Entrez votre mot de passe'}))
 
     error_messages = {
         'invalid_login': ("Nom d`'utilisateur ou mot de passe incorrect"),
