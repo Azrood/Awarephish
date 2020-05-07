@@ -28,7 +28,7 @@ class SignupForm(forms.Form):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
-            raise ValidationError("Les mtos de passes ne correspondent pas")
+            raise ValidationError("Les mots de passes ne correspondent pas")
         return password2
 
     def save(self, commit=True):
