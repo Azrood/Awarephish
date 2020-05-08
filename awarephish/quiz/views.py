@@ -81,7 +81,7 @@ def result(request):
                     score += answer_score
     score = round(score/scoretest,2)*10
     level = evaluate_level(score)
-    return JsonResponse({'status':1,'result':score, "level":level})
+    return JsonResponse({'status':1,'result':[score,10], "level":level})
 
 @login_required(login_url='/signin/')
 def phishquiz(request):
