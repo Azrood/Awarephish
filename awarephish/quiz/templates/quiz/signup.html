@@ -6,7 +6,8 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
 		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
 		<script src="{%static 'quiz/js/init.js' %}"></script>
@@ -63,9 +64,15 @@
 									<h2>Inscription</h2>
 								</header>
 								<div class="9u skel-cell-important row">
-									<form method="POST">{% csrf_token %}
-										{{ form.as_p }}
-										<input type="submit" value="S'inscrire" class="button">
+									<form method="POST" class="form-horizontal">{% csrf_token %}
+										{% for f in form %}
+										
+										<div class="form-group col-sm-10">
+											{{f.errors}}<br>
+											<label for="id_{{f.name}}"><strong>{{f.label}}</strong></label>{{f}}
+										</div>
+										{%endfor%}
+										<input type="submit" value="S'inscrire" class="button btn btn-block btn-default">
 									</form>
 								</div>
 							</section>
@@ -75,6 +82,11 @@
 				</div>	
 			</div>
 		</div>
-
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+		<script type="text/Javascript">
+			$(".errorlist").addClass("bg-danger");
+			$("#id_username, #id_password1, #id_email, #id_password2").addClass("form-control");
+		</script>
 	</body>
 </html>

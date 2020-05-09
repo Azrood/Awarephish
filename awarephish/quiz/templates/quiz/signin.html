@@ -11,10 +11,8 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
-		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
-		<script src="{%static 'quiz/js/init.js' %}"></script>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		
 		<noscript>
 			<link rel="stylesheet" href="{% static 'quiz/css/skel-noscript.css' %}" />
 			<link rel="stylesheet" href="{% static 'quiz/css/style.css'%}" />
@@ -64,18 +62,31 @@
 			<div id="page">
 				<div class="container">
 					<div class="row">
-						<div class="-3u skel-cell-important">
-							<section id="content" >
+						<div class="-3u skel-cell-important col-sm-10">
+							<section >
 								<header>
 									<h2>Connexion</h2>
 								</header>
-								<div class="9u skel-cell-important row">
-									<form method="POST">{% csrf_token %}
-										{{ form.as_p }}
-										<input type="submit" value="Connexion" class="button">
+								<div class="8u skel-cell-important">
+									<form class="form-horizontal" method="POST">{% csrf_token %}
+										
+										<ul class="errorlist nonfield">
+											<li>{{form.non_field_errors}}</li>
+										</ul><br>
+										
+										{% for f in form %}
+										<div class="form-group ">
+											<label for="id_{{f.name}}"><strong>{{f.label}}</strong></label>{{f}}
+										</div>
+										{%endfor%}
+									
+										<input type="submit" value="Connexion" class="btn button btn-block btn-default"> 
+										
 									</form>
+									
 								</div>
 							</section>
+
 						</div>
 					</div>
 
@@ -97,10 +108,6 @@
 										<p class="date"><a href="#">10.03.2012</a></p>
 										<p><a href="#">Vestibulum sem magna, elementum ut, vestibulum facilisis. Nulla facilisi. Cum sociis natoque penatibus.</a></p>
 									</li>
-									<li>
-										<p class="date"><a href="#">10.03.2012</a></p>
-										<p><a href="#">Pellentesque erat erat, tincidunt in, eleifend, malesuada bibendum. Suspendisse sit amet  in eros bibendum condimentum. </a> </p>
-									</li>
 								</ul>
 							</section>
 						</div>
@@ -121,24 +128,23 @@
 								<ul class="style1">
 									<li class="first"><a href="#">Pellentesque quis elit non lectus eleifend purus condimentum.</a></li>
 									<li><a href="#">Lorem ipsum dolort, consectetuer adipiscing dictum metus sapien.</a></li>
-									<li><a href="#">Phasellus nec dictum metus in sapien pellentesque congue.</a></li>
-									<li><a href="#">Cras vitae metus aliquam risus dictum metus in sapien pharetra.</a></li>
-									<li><a href="#">Duis non dictum metus in sapien ante in metus commodo euismod lobortis.</a></li>
 								</ul>
 							</section>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<!-- Copyright -->
-			<div id="copyright">
-				<div class="container">
-					Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)
-				</div>
-			</div>
 			
 		</div>
-		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+	<script src="{%static 'quiz/js/skel.min.js' %}"></script>
+		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
+		<script src="{%static 'quiz/js/init.js' %}"></script>
+<script type="text/Javascript">
+	$(".errorlist").addClass("bg-danger text-white");
+	$("#id_username, #id_password").addClass("form-control");
+</script>
 	</body>
 </html>
