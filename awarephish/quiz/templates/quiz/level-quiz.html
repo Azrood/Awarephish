@@ -6,10 +6,8 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
-		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
-		<script src="{%static 'quiz/js/init.js' %}"></script>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		
 		<noscript>
 			<link rel="stylesheet" href="css/skel-noscript.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -56,58 +54,30 @@
 			<div id="page">
 				<div class="container">
 					<div class="row">
-						<div class="3u">
-							<section id="sidebar1">
-								<header>
-									<h2>Quelques chiffres</h2>
-								</header>
-								<ul class="style3">
-									<li class="first">
-										<p class="date">156 millions</p>
-										<p>de courriels d’hameçonnage sont envoyés chaque jour</p>
-									</li>
-									<li>
-										<p class="date">16 millions</p>
-										<p>de courriels d’hameçonnage parviennent à déjouer les filtres.</p>
-									</li>
-									<li>
-										<p class="date">8 millions </p>
-										<p>de courriels d’hameçonnage sont finalement ouverts.</p>
-									</li>
-									<li>
-										<p class="date">800 000 liens </p>
-										<p>sont cliqués par les destinataires.</p>
-									</li>
-									<li>
-										<p class="date">80 000 personnes </p>
-										<p>mordent à l’hameçon et partagent leurs renseignements personnels.</p>
-									</li>
-								</ul>
-							</section>
-						</div>
-						<div class="6u skel-cell-important" id='results'>
+						<div class="2u text-white"> </div>
+						<div class="8u skel-cell-important" id='results'>
 							<section id="content" >
 								<header>
 									<h2>Test de niveau</h2>
 								</header>
 					
-								
-								<form id="level" method="post" class="skel-panels" action="{% url 'result' %}">
+
+								<form id="level" method="post" class="skel-panels form-horizontal" action="{% url 'result' %}">
 									{% csrf_token %}
 								{%for quest,value in quiz.items %}
-									<h5>{{ quest.question_text }}</h5>
-									<div class="row">
-										<ul>
+									<h3><strong class="text-capitalize block">{{ quest.question_text }}et donc nous avons vu que puisque les questions se multiplient à vitesse folle que pensez-vous du binome de merde que vous avez  alala je te plains, je te vois dns 10 secondes ? :p</strong></h3><img src="{% if quest.image %}{%url 'static' 'quiz/images/dontTakeTheBite.jpg'%}{%else%}{%endif%}">
 										{% for answer in value %}
-											
-											{% if answer.wrong_answers %}<label for="question{{quest.id}}_{{answer.wrong_answers}}"><input type="checkbox" name='{{answer.wrong_answers}}' id="question{{quest.id}}_{{answer.wrong_answers}}">{{answer.wrong_answers}}</label>{% endif %}
-											{% if answer.correct_answer %}<label for="question{{quest.id}}_{{answer.correct_answer}}"><input type="checkbox" name='{{answer.correct_answer}}' id="question{{quest.id}}_{{answer.correct_answer}}">{{answer.correct_answer}}</label>{% endif %}
-											{% endfor %}
-
-										</ul>
-									</div>
+											{% if quest.reponses_set.count == 1 %}<p></p>
+												{% if answer.wrong_answers %}<div class="custom-control custom-radio form-group rounded"><input class="custom-control-input"  type="radio" name='question{{quest.id}}' id="question{{quest.id}}_{{answer.wrong_answers}}" value="{{answer.wrong_answers}}"><label for="question{{quest.id}}_{{answer.wrong_answers}}" class="custom-control-label rounded d-block p-3 border bg-light text-dark">{{answer.wrong_answers}}</label></div>{% endif %}
+												{% if answer.correct_answer %}<div class="custom-control custom-radio form-group rounded"><input class="custom-control-input" type="radio" name='question{{quest.id}}' id="question{{quest.id}}_{{answer.correct_answer}}" value="{{answer.correct_answer}}"><label for="question{{quest.id}}_{{answer.correct_answer}}" class="custom-control-label rounded d-block p-3 border bg-light text-dark">{{answer.correct_answer}}</label></div>{% endif %}
+											{%else%}
+												{% if answer.wrong_answers %}<div class="custom-control custom-checkbox form-group rounded"><input class="custom-control-input" type="checkbox" name='{{answer.wrong_answers}}' id="question{{quest.id}}_{{answer.wrong_answers}}"><label class="custom-control-label rounded d-block p-3 border bg-light text-dark " for="question{{quest.id}}_{{answer.wrong_answers}}">{{answer.wrong_answers}}et bien oui mon petit michel, ah oui oui oui ! j'en ai bien peur de plus je crois bien qu'on a atteint la limite mon petit ouah en fait pas du tout !!! je me demande jsuqu'à quel pooint on peut aller comme ça mon petit !!!! bordel j'en ai mARRE JE VEUX EN FINIIR !!!</label></div>{% endif %}
+												{% if answer.correct_answer %}<div class="custom-control custom-checkbox form-group rounded"><input class="custom-control-input" type="checkbox" name='{{answer.correct_answer}}' id="question{{quest.id}}_{{answer.correct_answer}}"><label class="custom-control-label d-block p-3 bg-light border text-dark" for="question{{quest.id}}_{{answer.correct_answer}}">{{answer.correct_answer}}</label></div>{% endif %}
+											{% endif%}
+										
+										{% endfor %}
 								{% endfor %}
-								<input type="submit" value="Valider">
+								<input type="submit" value="Confirmer vos réponses" class="btn btn-default button btn-block">
 							</form>
 							
 							</section>
@@ -139,9 +109,9 @@
 						<div class="6u">
 							<section id="box2">
 								<header>
-									<h2>pour savoir plus </h2>
+
 								</header>
-								<div> <a href="#" class="image full"><img src="{% static 'quiz/images/dontTakeTheBite.jpg' %}" alt=""></a> </div>
+								
 							</section>
 						</div>
 						<div class="3u">
@@ -162,21 +132,26 @@
 				</div>
 			</div>
 		</div>
-		
+
+		<!---------- scripts------->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
+		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
+		<script src="{%static 'quiz/js/init.js' %}"></script>
 		<script type="text/JavaScript">
 			$('#level').submit(function(e){
 				e.preventDefault();
 				let form = this;
 				console.log(
-						$(form).serialize()+"&id=1,2,3");
+						$(form).serialize());
 				$.ajax({
 					type: "POST",
 					url: {%url 'result' %},
 					csrfmiddlewaretoken: "{{ csrf_token }}",
 					data:$(form).serialize()+"&id={% for q,v in quiz.items%}{{q.id}},{%endfor%}",
 					success: function(data) {
-						alert("good");
-						console.log(data.result);
+						$('#content').replaceWith(`<header><h2>Vous avez un score de ${data.score}, vous êtes au ${data.level}</h2></header><p class="font-weight-bolder"> ${data.message}</p><a href="{%url 'conseils'%}" class="button btn btn-default">Lire nos conseils</a>
+								<a href="{% url 'signup' %}" class="button btn-default btn">S'inscrire</a>`);
 					},
 					error: function(data) {
 						console.log('error');
@@ -187,5 +162,6 @@
 				
 			});
 		</script>
+		
 	</body>
 </html>
