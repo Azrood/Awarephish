@@ -54,14 +54,13 @@
 			<div id="page">
 				<div class="container">
 					<div class="row">
-						<div class="2u text-white"> </div>
+						<div class="2u text-white">  </div>
 						<div class="8u skel-cell-important" id='results'>
 							<section id="content" >
 								<header>
 									<h2>Test de niveau</h2>
 								</header>
 					
-
 								<form id="level" method="post" class="skel-panels form-horizontal" action="{% url 'result' %}">
 									{% csrf_token %}
 								{%for quest,value in quiz.items %}
@@ -77,11 +76,11 @@
 										
 										{% endfor %}
 								{% endfor %}
-								<input type="submit" value="Confirmer vos réponses" class="btn btn-default button btn-block">
-							</form>
-							
+									<input type="submit" value="Confirmer vos réponses" class="btn btn-default button btn-block">
+								</form>
 							</section>
 						</div>
+						<div class="2u text-white">  </div>
 
 					</div>
 
@@ -152,7 +151,7 @@
 					csrfmiddlewaretoken: "{{ csrf_token }}",
 					data:$(form).serialize()+"&id={% for q,v in quiz.items%}{{q.id}},{%endfor%}",
 					success: function(data) {
-						$('#content').replaceWith(`<header><h2>Vous avez un score de ${data.score}, vous êtes au ${data.level}</h2></header><p class="font-weight-bolder"> ${data.message}</p><a href="{%url 'conseils'%}" class="button btn btn-default">Lire nos conseils</a>
+						$('#content').replaceWith(`<header><h2>Vous avez un score de ${data.score}<br><br> vous êtes au ${data.level}</h2></header><p class="font-weight-bolder"> ${data.message}</p><a href="{%url 'conseils'%}" class="button btn btn-default">Lire nos conseils</a>
 								<a href="{% url 'signup' %}" class="button btn-default btn">S'inscrire</a>`);
 					},
 					error: function(data) {
