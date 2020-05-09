@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from .forms import SignupForm, SigninForm
 from .models import Utilisateur, Question, Progres, Quiztest
-from .utils import evaluate_level, get_user_answers
+from .utils import evaluate_level, get_user_answers, message_level
 # Create your views here.
 
 def redir(request):
@@ -81,7 +81,8 @@ def result(request):
                     score += answer_score
     score = round(score/scoretest,2)*10
     level = evaluate_level(score)
-    return JsonResponse({'status':1,'result':[score,10], "level":level})
+    message = message_level(level)
+    return JsonResponse({'status':1,'score':score, 'level':level,'message':message})
 
 @login_required(login_url='/signin/')
 def phishquiz(request):
