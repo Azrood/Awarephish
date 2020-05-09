@@ -13,11 +13,8 @@
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
-		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
-		<script src="{%static 'quiz/js/init.js' %}"></script>
+		
+		
 		<noscript>
 			<link rel="stylesheet" href="{% static 'quiz/css/skel-noscript.css' %}" />
 			<link rel="stylesheet" href="{% static 'quiz/css/style.css'%}" />
@@ -151,15 +148,14 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- Copyright -->
-			<div id="copyright">
-				<div class="container">
-					Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)
-				</div>
-			</div>
 			
 		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
+		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
+		<script src="{%static 'quiz/js/init.js' %}"></script>
+		
 		<script type="text/JavaScript">
 			$('#quiz').submit(function(e)
 			{
