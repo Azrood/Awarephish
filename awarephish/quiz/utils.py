@@ -10,6 +10,10 @@ def evaluate_level(score):
     else:
         return "advanced"
 
+def get_nextlevel_score(curr_level):
+    """Return necessary score for next level"""
+
+
 def get_user_answers(request):
     """"Returns a list of user answers"""
     return [ (k if v=='on' else v) for k,v in request.POST.items() if 'csrfmiddle' not in k][:-1]
