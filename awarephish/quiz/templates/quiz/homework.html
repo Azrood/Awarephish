@@ -70,8 +70,8 @@
 									<h2>compte</h2>
 								</header>
 								<div class="btn-group-vertical">
-									<a class="btn btn-info active" href="{% url 'account' %}">Infos</a>
-									<a class="btn btn-dark" href="{% url 'homework' %}">Devoirs</a>
+									<a class="btn btn-dark" href="{% url 'account' %}">Infos</a>
+									<a class="btn  btn-info active" href="{% url 'homework' %}">Devoirs</a>
 									<a class="btn btn-dark " href="{% url 'progress' %}">Progrès</a>
 									
 								</div>
@@ -80,7 +80,9 @@
 						
 						<div class="8u skel-cell-important">
 							<section id="content">
-								<p>bleh</p>
+								{% for dev in devoir%}
+								<p>{{dev.texte}}</p>
+								{% endfor%}
 							</section>
 						</div>
 						

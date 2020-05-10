@@ -92,7 +92,7 @@ def phishquiz(request):
     return render(request,'quiz/phishing-quiz.html',{'quiz':quiz, 'quiztest':quiztest})
 
 def resultquiz(request):
-    # TODO: return proper result
+    #TODO : proper score calculation
     user = get_object_or_404(Utilisateur, user=request.user)
 
     questions = get_object_or_404(Quiztest, pk=int(request.POST.get('id'))).questions.all()
@@ -127,11 +127,20 @@ def resultquiz(request):
 
     
 #TODO : HOW TO GIVE HOMEWORK ????
-@login_required
-def progress(request):
+def view_progress(request):
     user = get_object_or_404(Utilisateur, user=request.user)
     prog = { 
             'x':[p.date_test for p in user.progres_set.all()],
             'y': [p.score_test for p in user.progres_set.all()],
     }
     return JsonResponse({'status':1, 'progress':prog})
+
+@login_required
+def homework(request):
+    user = get_object_or_404(Utilisateur, user=request.user)
+    devoirs = user.homework.all()
+    return render(request,'quiz/homework.html',{'devoir':devoirs})
+
+@login_required
+def progress(request):
+    return render(request,"quiz/progress.html")

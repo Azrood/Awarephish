@@ -64,26 +64,23 @@
 								<form id="level" method="post" class="skel-panels form-horizontal" action="{% url 'result' %}">
 									{% csrf_token %}
 								{%for quest,value in quiz.items %}
-									<h3><strong class="text-capitalize block">{{ quest.question_text }}et donc nous avons vu que puisque les questions se multiplient à vitesse folle que pensez-vous du binome de merde que vous avez  alala je te plains, je te vois dns 10 secondes ? :p</strong></h3><img src="{% if quest.image %}{%url 'static' 'quiz/images/dontTakeTheBite.jpg'%}{%else%}{%endif%}">
+									<h3><strong class="block">{{ quest.question_text }}et donc nous avons vu que puisque les questions se multiplient à vitesse folle que pensez-vous du binome de merde que vous avez  alala je te plains, je te vois dns 10 secondes ? :p</strong></h3><img src="{% if quest.image %}{%url 'static' 'quiz/images/dontTakeTheBite.jpg'%}{%else%}{%endif%}">
 										{% for answer in value %}
-											{% if quest.reponses_set.count == 1 %}<p></p>
+											{% if quest.reponses_set.count == 1 %}
 												{% if answer.wrong_answers %}<div class="custom-control custom-radio form-group rounded"><input class="custom-control-input"  type="radio" name='question{{quest.id}}' id="question{{quest.id}}_{{answer.wrong_answers}}" value="{{answer.wrong_answers}}"><label for="question{{quest.id}}_{{answer.wrong_answers}}" class="custom-control-label rounded d-block p-3 border bg-light text-dark">{{answer.wrong_answers}}</label></div>{% endif %}
 												{% if answer.correct_answer %}<div class="custom-control custom-radio form-group rounded"><input class="custom-control-input" type="radio" name='question{{quest.id}}' id="question{{quest.id}}_{{answer.correct_answer}}" value="{{answer.correct_answer}}"><label for="question{{quest.id}}_{{answer.correct_answer}}" class="custom-control-label rounded d-block p-3 border bg-light text-dark">{{answer.correct_answer}}</label></div>{% endif %}
 											{%else%}
 												{% if answer.wrong_answers %}<div class="custom-control custom-checkbox form-group rounded"><input class="custom-control-input" type="checkbox" name='{{answer.wrong_answers}}' id="question{{quest.id}}_{{answer.wrong_answers}}"><label class="custom-control-label rounded d-block p-3 border bg-light text-dark " for="question{{quest.id}}_{{answer.wrong_answers}}">{{answer.wrong_answers}}et bien oui mon petit michel, ah oui oui oui ! j'en ai bien peur de plus je crois bien qu'on a atteint la limite mon petit ouah en fait pas du tout !!! je me demande jsuqu'à quel pooint on peut aller comme ça mon petit !!!! bordel j'en ai mARRE JE VEUX EN FINIIR !!!</label></div>{% endif %}
-												{% if answer.correct_answer %}<div class="custom-control custom-checkbox form-group rounded"><input class="custom-control-input" type="checkbox" name='{{answer.correct_answer}}' id="question{{quest.id}}_{{answer.correct_answer}}"><label class="custom-control-label d-block p-3 bg-light border text-dark" for="question{{quest.id}}_{{answer.correct_answer}}">{{answer.correct_answer}}</label></div>{% endif %}
+												{% if answer.correct_answer %}<div class="custom-control custom-checkbox form-group rounded"><input class="custom-control-input" type="checkbox" name='{{answer.correct_answer}}' id="question{{quest.id}}_{{answer.correct_answer}}"><label class="custom-control-label btn-outline-dark d-block rounded p-3 bg-light border text-dark" for="question{{quest.id}}_{{answer.correct_answer}}">{{answer.correct_answer}}</label></div>{% endif %}
 											{% endif%}
-										
 										{% endfor %}
 								{% endfor %}
-									<input type="submit" value="Confirmer vos réponses" class="btn btn-default button btn-block">
+									<input type="submit" value="Confirmer vos réponses" class="btn btn-default button">
 								</form>
 							</section>
 						</div>
 						<div class="2u text-white">  </div>
-
 					</div>
-
 				</div>	
 			</div>
 
