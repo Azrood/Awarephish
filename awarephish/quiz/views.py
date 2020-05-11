@@ -61,7 +61,7 @@ def account(request):
 
 def level_quiz(request):
     r=[]
-    for level in ["Niveau 1","Niveau 2"]:
+    for level in ["Niveau 1","Niveau 2", "Niveau 3"]:
         r += random.sample(
                 set(Question.objects.filter(difficulty=level)),
                 2)
