@@ -64,7 +64,7 @@
 								<form id="level" method="post" class="skel-panels form-horizontal" action="{% url 'result' %}">
 									{% csrf_token %}
 								{%for quest,value in quiz.items %}
-									<h3><strong class="block">{{ quest.question_text }}</strong></h3>{% if quest.image%}<img style="width:120%;" src="{% static 'quiz/media/'|add:quest.image.url %}{%else%}{%endif%}">
+									<br><br><h3><strong class="block">{{ quest.question_text }}</strong></h3>{% if quest.image%}<img style="width:120%;" src="{% static 'quiz/media/'|add:quest.image.url %}{%else%}{%endif%}">
 										{% for answer in value %}
 											{% if quest.reponses_set.count == 1 %}
 												{% if answer.wrong_answers %}<div class="custom-control custom-radio form-group rounded"><input class="custom-control-input"  type="radio" name='question{{quest.id}}' id="question{{quest.id}}_{{answer.wrong_answers}}" value="{{answer.wrong_answers}}"><label for="question{{quest.id}}_{{answer.wrong_answers}}" class="custom-control-label rounded d-block p-3 border bg-light text-dark">{{answer.wrong_answers}}</label></div>{% endif %}
@@ -73,7 +73,7 @@
 												{% if answer.wrong_answers %}<div class="custom-control custom-checkbox form-group rounded"><input class="custom-control-input" type="checkbox" name='{{answer.wrong_answers}}' id="question{{quest.id}}_{{answer.wrong_answers}}"><label class="custom-control-label rounded d-block p-3 border bg-light text-dark " for="question{{quest.id}}_{{answer.wrong_answers}}">{{answer.wrong_answers}}</label></div>{% endif %}
 												{% if answer.correct_answer %}<div class="custom-control custom-checkbox form-group rounded"><input class="custom-control-input" type="checkbox" name='{{answer.correct_answer}}' id="question{{quest.id}}_{{answer.correct_answer}}"><label class="custom-control-label btn-outline-dark d-block rounded p-3 bg-light border text-dark" for="question{{quest.id}}_{{answer.correct_answer}}">{{answer.correct_answer}}</label></div>{% endif %}
 											{% endif%}
-										{% endfor %}
+										{% endfor %}<hr>
 								{% endfor %}
 									<input type="submit" value="Confirmer vos réponses" class="btn btn-default button">
 								</form>
