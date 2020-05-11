@@ -67,7 +67,7 @@
 						<div class="2u">
 							<section id="sidebar1" >
 								<header>
-									<h2>Compte</h2>
+									<h2> </h2>
 								</header>
 								<div class="btn-group-vertical">
 									<a class="btn btn-dark" href="{% url 'account' %}">Infos</a>
@@ -80,7 +80,7 @@
 						
 						<div class="8u skel-cell-important">
 							<section id="content">
-								<p></p>
+								<canvas id="mechart"></canvas>
 							</section>
 						</div>
 						
@@ -135,20 +135,45 @@
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
 		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
 		<script src="{%static 'quiz/js/init.js' %}"></script>
+		
 	<script type="text/JavaScript">
 	$(document).ready( function() {
 		$.ajax({
 			url : '{%url "view-progress" %}',
 			type : 'get',
-			success : function(data){
-				alert(data.progress.x);
-				console.log(data.progress);
+			success : function(result){
+				Date.prototype.formatDDMMYYYY = function() { return (this.getHours()+":"+this.getMinutes()+" "+this.getDate() + "/" + (this.getMonth()+1)+"/"+this.getFullYear())};
+				var labels = [], data = Array.from(result.progress.y);
+				result.progress.x.forEach(function(stamp){labels.push(new Date(stamp).formatDDMMYYYY()); })
+				var ctx = document.getElementById('mechart').getContext('2d');
+				var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Progrès au cours du temps',
+            backgroundColor: '#8000ff',
+            borderColor: 'rgb(255, 99, 132)',
+			pointStrokeColor      : "#fff",
+          	pointHighlightFill    : "#fff",
+          	pointHighlightStroke  : "rgba(151,187,205,1)",
+            data: data
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
 			},
-			error : function(data){
-				console.log("error\n"+data);
+			error : function(result){
+				console.log("error\n"+result);
 			}
 		});
 	});
