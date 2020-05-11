@@ -11,12 +11,12 @@ class Question(models.Model):
     image = models.ImageField(upload_to='questions', null=True, blank=True)
 
     def __str__(self):
-        return self.question_text
+        return f"{self.id} {self.type_question} {self.difficulty}"
 
 class Reponses(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    wrong_answers = models.CharField('Réponses Incorrectes', max_length=400, null=True)
-    correct_answer = models.CharField('Réponses correctes', max_length=400, null=True)
+    wrong_answers = models.CharField('Réponses Incorrectes', max_length=400, null=True, blank=True)
+    correct_answer = models.CharField('Réponses correctes', max_length=400, null=True, blank=True)
 
 class Devoir(models.Model):
     type_devoir = models.CharField("Type de devoir", max_length=100)

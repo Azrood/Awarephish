@@ -1,11 +1,11 @@
 def evaluate_level(score):
     """Evaluate level base on score"""
-    assert 0<= score <=10
-    if score < 3:
+    assert 0<= score <=300
+    if score < 100:
         return "Niveau 1"
-    elif score < 6:
+    elif score < 200:
         return "Niveau 2"
-    elif score < 9:
+    elif score < 300:
         return "Niveau 3"
     else:
         return "advanced"
