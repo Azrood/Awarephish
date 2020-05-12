@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.utils import timezone
 
 from .forms import SignupForm, SigninForm
-from .models import Utilisateur, Question, Progres, Quiztest
+from .models import Utilisateur, Question, Progres, Quiztest, Devoir
 from .utils import evaluate_level, get_user_answers, message_level, get_nextlevel_score
 # Create your views here.
 
@@ -96,7 +96,9 @@ def result(request):
 @login_required(login_url='/signin/')
 def phishquiz(request):
     user = get_object_or_404(Utilisateur, user=request.user)
-    quiztest = random.choice(Quiztest.objects.filter(difficulty_test=user.niveau_actuel))
+    quiztest = random.choice(Quiztest.objects.filter(difficulty_test=user.niveau_actuel).exclude(users=user))
+    quiztest.users.set([user])
+    quiztest.save()
     quiz = {quest : [rep for rep in quest.reponses_set.all()] for quest in quiztest.questions.all()}
     return render(request,'quiz/phishing-quiz.html',{'quiz':quiz, 'quiztest':quiztest})
 
@@ -111,10 +113,11 @@ def resultquiz(request):
 
     for question in questions:
         answer_score = question.note / question.reponses_set.filter(correct_answer__isnull=False).count()
-        scoretest+= question.note
+        scoretest += question.note
         user_answers_copy = user_answers.copy()
-        for answer in user_answers:
+        for answer in user_answers_copy:
             if question.reponses_set.filter(Q(wrong_answers=answer) | Q(correct_answer=answer)):
+                user_answers.remove(answer)
                 if question.reponses_set.filter(correct_answer=answer):
                     score += answer_score
                     nbr_reponse_correcte += 1
@@ -122,20 +125,29 @@ def resultquiz(request):
                 else:
                     nbr_reponse += 1
                     score -= answer_score
-    score = max(round(score/scoretest,2)*100, 0)
-
-    user.score_actuel = round((user.score_actuel + score) / 2, 2)
+    coef = get_nextlevel_score(user.niveau_actuel)
+    
+    score = max(round(score,2), 0)
+    user.score_actuel = round(user.score_actuel + score, 2)
     user.total_reponse += nbr_reponse
     user.total_reponse_correctes += nbr_reponse_correcte
     user.niveau_actuel = evaluate_level(user.score_actuel)
-    user.save()
+    #TODO : HOW TO GIVE HOMEWORK ????
 
+    homeworks = [random.choice(
+                Devoir.objects.filter(
+                    difficulty_devoir=user.niveau_actuel,
+                                        type_devoir=typ))
+                 for typ in ["video","texte"]]
+
+    user.save()
     user.progres_set.create(date_test=timezone.now(), score_test=score)
     next_level = get_nextlevel_score(user.niveau_actuel)
-    return JsonResponse({'status':1, 'result':score, 'level':user.niveau_actuel,'next':next_level})
+
+    return JsonResponse({'status':1, 'result':score,'actual':user.score_actuel , 'level':user.niveau_actuel,'next':next_level})
 
     
-#TODO : HOW TO GIVE HOMEWORK ????
+
 
 def view_progress(request):
     user = get_object_or_404(Utilisateur, user=request.user)
