@@ -97,7 +97,7 @@ def result(request):
 def phishquiz(request):
     user = get_object_or_404(Utilisateur, user=request.user)
     quiztest = random.choice(Quiztest.objects.filter(difficulty_test=user.niveau_actuel))
-    quiz = {quest : {rep.wrong_answers : rep.correct_answer for rep in quest.reponses_set.all()} for quest in quiztest.questions.all()}
+    quiz = {quest : [rep for rep in quest.reponses_set.all()] for quest in quiztest.questions.all()}
     return render(request,'quiz/phishing-quiz.html',{'quiz':quiz, 'quiztest':quiztest})
 
 def resultquiz(request):
