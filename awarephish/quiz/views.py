@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from .forms import SignupForm, SigninForm
 from .models import Utilisateur, Question, Progres, Quiztest
-from .utils import evaluate_level, get_user_answers, message_level
+from .utils import evaluate_level, get_user_answers, message_level, get_nextlevel_score
 # Create your views here.
 
 def redir(request):
@@ -131,8 +131,8 @@ def resultquiz(request):
     user.save()
 
     user.progres_set.create(date_test=timezone.now(), score_test=score)
-
-    return JsonResponse({'status':1, 'result':score, 'level':user.niveau_actuel})
+    next_level = get_nextlevel_score(user.niveau_actuel)
+    return JsonResponse({'status':1, 'result':score, 'level':user.niveau_actuel,'next':next_level})
 
     
 #TODO : HOW TO GIVE HOMEWORK ????
