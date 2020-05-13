@@ -57,7 +57,12 @@ def conseils(request):
     return render(request,'quiz/conseil.html')
 
 def account(request):
-    return render(request,'quiz/account.html')
+    user = get_object_or_404(Utilisateur, user=request.user)
+    return render(request,'quiz/account.html',{'score':user.score_actuel,
+                                                'user':user,
+                                                'next':get_nextlevel_score(user.niveau_actuel),
+                                                'progress':round((user.score_actuel/get_nextlevel_score(user.niveau_actuel))*100,2)
+                                                })
 
 def level_quiz(request):
     r=[]
@@ -128,20 +133,17 @@ def resultquiz(request):
     coef = get_nextlevel_score(user.niveau_actuel)
     
     score = max(round(score,2), 0)
-    user.score_actuel = round(user.score_actuel + score, 2)
+    user.score_actuel = min(round(user.score_actuel + score, 2),300)
     user.total_reponse += nbr_reponse
     user.total_reponse_correctes += nbr_reponse_correcte
+
     user.niveau_actuel = evaluate_level(user.score_actuel)
-    #TODO : HOW TO GIVE HOMEWORK ????
 
-    homeworks = [random.choice(
-                Devoir.objects.filter(
-                    difficulty_devoir=user.niveau_actuel,
-                                        type_devoir=typ))
-                 for typ in ["video","texte"]]
-
-    user.save()
+    homeworks = [random.choice(Devoir.objects.filter(difficulty_devoir=user.niveau_actuel,type_devoir=typ).exclude(utilisateur=user))for typ in ["video","texte"]]
+    user.homework.set(homeworks+list(user.homework.all()))
+    
     user.progres_set.create(date_test=timezone.now(), score_test=score)
+    user.save()
     next_level = get_nextlevel_score(user.niveau_actuel)
 
     return JsonResponse({'status':1, 'result':score,'actual':user.score_actuel , 'level':user.niveau_actuel,'next':next_level})
