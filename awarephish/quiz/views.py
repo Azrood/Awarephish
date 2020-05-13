@@ -59,9 +59,10 @@ def conseils(request):
 def account(request):
     user = get_object_or_404(Utilisateur, user=request.user)
     return render(request,'quiz/account.html',{'score':user.score_actuel,
-                                                'user':user,
+                                                'users':user,
                                                 'next':get_nextlevel_score(user.niveau_actuel),
-                                                'progress':round((user.score_actuel/get_nextlevel_score(user.niveau_actuel))*100,2)
+                                                'progress':round((user.score_actuel/get_nextlevel_score(user.niveau_actuel))*100,2),
+                                                'remainder':get_nextlevel_score(user.niveau_actuel) - user.score_actuel,
                                                 })
 
 def level_quiz(request):
@@ -138,8 +139,11 @@ def resultquiz(request):
     user.total_reponse_correctes += nbr_reponse_correcte
 
     user.niveau_actuel = evaluate_level(user.score_actuel)
+    try:
+        homeworks = [random.choice(Devoir.objects.filter(difficulty_devoir=user.niveau_actuel,type_devoir=typ).exclude(utilisateur=user))for typ in ["video","texte"]]
+    except IndexError:
+        homeworks=[]
 
-    homeworks = [random.choice(Devoir.objects.filter(difficulty_devoir=user.niveau_actuel,type_devoir=typ).exclude(utilisateur=user))for typ in ["video","texte"]]
     user.homework.set(homeworks+list(user.homework.all()))
     
     user.progres_set.create(date_test=timezone.now(), score_test=score)
