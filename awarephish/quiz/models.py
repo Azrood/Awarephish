@@ -42,7 +42,7 @@ class Utilisateur(models.Model):
 class Quiztest(models.Model): # test in mcd
     difficulty_test = models.CharField("Niveau du test", max_length=50)
     questions = models.ManyToManyField(Question)
-    users = models.ManyToManyField(Utilisateur)
+    users = models.ManyToManyField(Utilisateur, blank=True)
 
 class Progres(models.Model):
     user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)

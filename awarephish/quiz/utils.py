@@ -12,6 +12,12 @@ def evaluate_level(score):
 
 def get_nextlevel_score(curr_level):
     """Return necessary score for next level"""
+    if curr_level == "Niveau 1":
+        return 100
+    elif curr_level == "Niveau 2":
+        return 200
+    elif curr_level == "Niveau 3":
+        return 300
 
 
 def get_user_answers(request):

@@ -80,7 +80,10 @@
 						
 						<div class="8u skel-cell-important">
 							<section id="content">
-								<p>bleh</p>
+								<header class="active"><h2>Bienvenue {{user}}</h2></header><br>
+									<div class="progress" style="height: 30px;"><div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{progress}}%; color:#323338; font-weight:bold;text-align:center;">Il vous reste {{progress}} points {% if next == 300 %}pour compléter la barre{%else%} avant le prochain niveau{%endif%}</div></div><br>
+									<header><h2>Votre score est {{score}}<br>Vous êtes au {{user.niveau_actuel}}</h2></header>
+									<br>
 							</section>
 						</div>
 						

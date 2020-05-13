@@ -146,7 +146,9 @@
 			url : '{%url "view-progress" %}',
 			type : 'get',
 			success : function(result){
-				Date.prototype.formatDDMMYYYY = function() { return (this.getHours()+":"+this.getMinutes()+" "+this.getDate() + "/" + (this.getMonth()+1)+"/"+this.getFullYear())};
+				Date.prototype.formatDDMMYYYY = function() { 
+					return (this.getHours()+":"+ (( 0<this.getMinutes() && this.getMinutes() < 10 ) ? "0"+this.getMinutes():this.getMinutes())+" "+(( 0< this.getDate() && this.getDate() < 10 ) ? "0"+this.getDate():this.getDate())+ "/" + ((0<(this.getMonth()+1) && (this.getMonth()+1) < 10 ) ? "0"+(this.getMonth()+1): (this.getMonth()+1))+"/"+this.getFullYear());
+				};
 				var labels = [], data = Array.from(result.progress.y);
 				result.progress.x.forEach(function(stamp){labels.push(new Date(stamp).formatDDMMYYYY()); })
 				var ctx = document.getElementById('mechart').getContext('2d');

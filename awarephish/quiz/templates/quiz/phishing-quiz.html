@@ -75,15 +75,15 @@
 								<form id="quiz" method="post" class="skel-panels" action="{% url 'resultquiz' %}">
 									{% csrf_token %}
 									{%for quest,answers in quiz.items %}
-									<h3><strong class="block">{{ quest.question_text }} nous avons vu que puisque les questions se multiplient à vitesse folle que pensez-vous du binome de merde que vous avez  alala je te plains, je te vois dns 10 secondes ?</strong></h3><img src="{% if quest.image %}{% static 'quiz/images/dontTakeTheBite.jpg'%}{%else%}{%endif%}">
-									{% for incorrect,correct in answers.items %}
-										
+									<br><br><h3><strong class="block">{{ quest.question_text }} </strong></h3>{% if quest.image %}<img style="width:120%;" src="{% static 'quiz/media/'|add:quest.image.url%}">{%else%}{%endif%}
+									{% for rep in answers %}
+
 										{% if quest.reponses_set.count == 1 %}
-										{% if incorrect %}<div class="custom-control custom-radio form-group rounded"><input class="custom-control-input"  type="radio" name='question{{quest.id}}' id="question{{quest.id}}_{{incorrect}}" value="{{incorrect}}"><label for="question{{quest.id}}_{{incorrect}}" class="custom-control-label rounded d-block p-3 border bg-light text-dark">{{incorrect}}</label></div>{% endif %}
-												{% if correct %}<div class="custom-control custom-radio form-group rounded"><input class="custom-control-input" type="radio" name='question{{quest.id}}' id="question{{quest.id}}_{{correct}}" value="{{correct}}"><label for="question{{quest.id}}_{{correct}}" class="custom-control-label rounded d-block p-3 border bg-light text-dark">{{correct}}</label></div>{% endif %}
+											{% if rep.wrong_answers %}<div class="custom-control custom-radio form-group rounded"><input class="custom-control-input"  type="radio" name='question{{quest.id}}' id="question{{quest.id}}_{{rep.wrong_answers}}" value="{{rep.wrong_answers}}"><label for="question{{quest.id}}_{{rep.wrong_answers}}" class="custom-control-label rounded d-block p-3 border bg-light text-dark">{{rep.wrong_answers}}</label></div>{% endif %}
+											{% if rep.correct_answer %}<div class="custom-control custom-radio form-group rounded"><input class="custom-control-input" type="radio" name='question{{quest.id}}' id="question{{quest.id}}_{{rep.correct_answer}}" value="{{rep.correct_answer}}"><label for="question{{quest.id}}_{{rep.correct_answer}}" class="custom-control-label rounded d-block p-3 border bg-light text-dark">{{rep.correct_answer}}</label></div>{% endif %}
 										{%else%}
-											{% if incorrect %}<div class="custom-control custom-checkbox form-group rounded"><input class="custom-control-input"  type="checkbox" name='{{incorrect}}' id="question{{quest.id}}_{{correct}}"><label class="custom-control-label rounded d-block p-3 border bg-light text-dark" for="question{{quest.id}}_{{correct}}">{{incorrect}}inco</label></div>{% endif %}
-											{% if correct %}<div class="custom-control custom-checkbox form-group rounded"><input class="custom-control-input"  type="checkbox" name='{{correct}}' id="question{{quest.id}}_{{incorrect}}"><label class="custom-control-label rounded d-block p-3 border bg-light text-dark" for="question{{quest.id}}_{{incorrect}}">{{correct}}</label></div>{% endif %}
+										{% if rep.wrong_answers %}<div class="custom-control custom-checkbox form-group rounded"><input class="custom-control-input"  type="checkbox" name='{{rep.wrong_answers}}' id="question{{quest.id}}_{{rep.wrong_answers}}"><label class="custom-control-label rounded d-block p-3 border bg-light text-dark" for="question{{quest.id}}_{{rep.wrong_answers}}">{{rep.wrong_answers}}</label></div>{% endif %}
+										{% if rep.correct_answer %}<div class="custom-control custom-checkbox form-group rounded"><input class="custom-control-input"  type="checkbox" name='{{rep.correct_answer}}' id="question{{quest.id}}_{{rep.correct_answer}}"><label class="custom-control-label rounded d-block p-3 border bg-light text-dark" for="question{{quest.id}}_{{rep.correct_answer}}">{{rep.correct_answer}}</label></div>{% endif %}
 										{%endif%}
 										{% endfor %}
 
@@ -164,7 +164,7 @@
 					csrfmiddlewaretoken: "{{ csrf_token }}",
 					data:$(form).serialize()+"&id={{quiztest.id}}",
 					success: function(data) {
-						$('#content').replaceWith(`<div class="progress" style="height: 25px;"><div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%; color:#323338; font-weight:bold; text-align : center;">Il vous reste ${10-data.result} avant le prochain niveau</div></div><br><header><h2>Vous avez eu un score de ${data.result}<br><br> vous êtes au ${data.level}</h2></header><a href="{%url 'homework'%}" class="button btn btn-default">Consulter vos devoirs</a>`);
+						$('#content').replaceWith(`<div class="progress" style="height: 25px;"><div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:${Math.floor((data.actual/data.next)*100)}%; color:#323338; font-weight:bold; text-align : center;">Il vous reste ${Math.round(((data.next-data.actual)+Number.EPSILON)*100)/100} points ${(data.next===300)?"pour compléter la barre":"avant le prochain niveau"}</div></div><br><header><h2>Vous avez eu un score de ${Math.round((data.result+Number.EPSILON)*100)/100}<br><br>Votre score est ${Math.round((data.actual+Number.EPSILON)*100)/100} <br><br> vous êtes au ${data.level}</h2></header><a href="{%url 'homework'%}" class="button btn btn-default">Consulter vos devoirs</a>`);
 					},
 					error: function(data) {
 						console.log('error');
