@@ -81,7 +81,15 @@
 						<div class="8u skel-cell-important">
 							<section id="content">
 								{% for dev in devoir%}
-								<p>{{dev.texte}}</p>
+
+									{% if dev.type_devoir == "texte" %}
+										<a  href="http://{{dev.texte}}">Consultez cet article</a><p>Durée estimée :{{dev.duree}} minutes</p><br>
+									{% else %}
+										<details>
+											<summary class="font-weight-bolder">Consultez cette vidéo : (durée estimée {{dev.duree}} min )</summary>
+											<p><iframe width="853" height="480" src="{{dev.texte}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+										</details><br>
+									{% endif %}
 								{% endfor%}
 							</section>
 						</div>
