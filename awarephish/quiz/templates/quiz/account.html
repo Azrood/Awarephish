@@ -78,19 +78,27 @@
 							</section>
 						</div>	
 						
-						<div class="8u skel-cell-important">
+						<div class="9u skel-cell-important">
 							<section id="content">
-								<header class="active"><h2>Bienvenue {{users}}<br>Vous êtes au {{users.niveau_actuel}}</h2></header><br>
-									<div class="progress" style="height: 30px;"><div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{progress}}%; color:#323338; font-weight:bold;text-align:center;">{% if not remainder %} Bravo ! Vous avez atteint le niveau maximal !{%else%}Il vous reste {{remainder}} points {% if next == 300 %}pour compléter la barre{%else%} avant le prochain niveau{%endif%}{%endif%}</div></div><br>
-									<div class="container">
+								<header class="active"><h2>Bienvenue {{users}}</h2></header><br>
+								<div class="progress" style="height: 30px;"><div class="progress-bar progress-bar-striped progress-bar-animated bg-{% if score == 300 %}success{% else %}warning{%endif%}" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{progress}}%; color:#323338; font-weight:bold;text-align:center;">{% if not remainder %} Bravo ! Vous avez atteint le niveau maximal !{%else%}Il vous reste {{remainder}} points {% if next == 300 %}pour compléter la barre{%else%} avant le prochain niveau{%endif%}{%endif%}</div></div><br>
+									
 										<div class="row">
-												{% if users.niveau_actuel >= "Niveau 1"%}<img src="{% static 'quiz/images/gold.png' %}">{% else %}<img src="{% static 'quiz/images/locked_medal.png'%}">{%endif%}
-												{% if users.niveau_actuel >= "Niveau 2"%}<img src="{% static 'quiz/images/silver.png' %}">{% else %}<img src="{% static 'quiz/images/locked_medal.png'%}">{%endif%}
-												{% if users.niveau_actuel >= "Niveau 3"%}<img src="{% static 'quiz/images/bronze.png' %}">{% else %}<img src="{% static 'quiz/images/locked_medal.png'%}">{%endif%}
-												{% if score == 300 %}<img src="{% static 'quiz/images/trophy.png' %}">{% else %}<img src="{% static 'quiz/images/trophy.png'%}">{%endif%}
-									</div></div>
-									<header><h2>Votre score est {{score}}</h2></header>
-									<br>
+											<div class="col-5"><img src="{% if users.niveau_actuel >= 'Niveau 3'%}{% static 'quiz/images/bronze.png' %}{%else%}{% static 'quiz/images/locked_medal.png'%}{%endif%}"><br><div class="text-light font-weight-bold badge badge-pill badge-dark" style="position:relative;left:6px;">Niveau 1</div></div>
+											<div class="col-5"><img src="{% if users.niveau_actuel >= 'Niveau 2'%}{% static 'quiz/images/silver.png' %}{%else%}{% static 'quiz/images/locked_medal.png'%}{%endif%}"><br><div class="text-light font-weight-bold badge badge-pill badge-dark" style="position:relative;left:6px;">Niveau 2</div></div>
+											<div class="col-2"><img src="{% if users.niveau_actuel >= 'Niveau 1'%}{% static 'quiz/images/gold.png' %}{% else %}{% static 'quiz/images/locked_medal.png'%}{%endif%}"><br><div class="text-light font-weight-bold badge badge-pill badge-dark" style="position:relative;left:6px;">Niveau 3</div></div>
+										</div>
+										<div class="row">
+											<div class="col offset-5">
+												<img src="{% if score == 300 %}{% static 'quiz/images/trophy.png' %}{% else %}{% static 'quiz/images/trophy.png'%}{%endif%}"><br>
+												<div class="text-light font-weight-bold badge badge-pill badge-dark no-gutter" style="position:relative;right:25px;">
+													Formation complétée
+
+												</div>
+											</div>
+										</div>
+									
+									<header><h2>Votre score est {{score}}<br>Vous êtes au {{users.niveau_actuel}}</h2></header>
 							</section>
 						</div>
 						
