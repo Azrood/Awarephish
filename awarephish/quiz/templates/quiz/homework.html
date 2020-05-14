@@ -73,22 +73,35 @@
 									<a class="btn btn-dark" href="{% url 'account' %}">Infos</a>
 									<a class="btn  btn-info active" href="{% url 'homework' %}">Devoirs</a>
 									<a class="btn btn-dark " href="{% url 'progress' %}">Progrès</a>
+									<a class="btn btn-dark " href="{%url 'parametre'%}">Paramètres</a>
 									
 								</div>
 							</section>
 						</div>	
 						
-						<div class="8u skel-cell-important">
+						<div class="9u skel-cell-important">
 							<section id="content">
 								{% for dev in devoir%}
 
 									{% if dev.type_devoir == "texte" %}
-										<a  href="http://{{dev.texte}}">Consultez cet article</a><p>Durée estimée :{{dev.duree}} minutes</p><br>
+										<div class="container">
+											<div class="row">
+												<div class="col-auto">
+												<a class="badge font-weight-bold badge-warning badge-pill" id="dev{{dev.id}}" target="_blank" href="http://{{dev.texte}}">Consultez cet article</a><p class="font-weight-bold">Durée estimée :{{dev.duree}} minutes</p>
+												</div>
+											</div>
+										</div>
+										<hr>
 									{% else %}
-										<details>
-											<summary class="font-weight-bolder">Consultez cette vidéo : (durée estimée {{dev.duree}} min )</summary>
-											<p><iframe width="853" height="480" src="{{dev.texte}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
-										</details><br>
+									<div class="container">
+											<button type="button" class="font-weight-bolder btn btn-warning" data-toggle="collapse" data-target="#dev{{dev.id}}">
+												Consultez cette vidéo : (durée estimée {{dev.duree}} min )
+											</button>
+											<div id="dev{{dev.id}}" class="collapse">
+												<iframe width="700" height="480" src="{{dev.texte}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+											</div>
+									</div>
+									<hr>	
 									{% endif %}
 								{% endfor%}
 							</section>
@@ -148,5 +161,13 @@
 		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
 		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
 		<script src="{%static 'quiz/js/init.js' %}"></script>
+		<script type="text/JavaScript">
+		$("button").click( function() {
+			$(this).addClass('btn-success').removeClass('btn-warning');
+		});
+		$(".col-auto a").click( function() {
+			$(this).addClass('badge-success').removeClass('badge-warning');
+		});
+		</script>
 	</body>
 </html>

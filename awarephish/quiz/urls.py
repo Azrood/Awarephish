@@ -17,4 +17,5 @@ urlpatterns = [
     path('resultquiz/', views.resultquiz, name="resultquiz"),
     path('account/homework/', views.homework, name='homework'),
     path('accout/viewprogres/', views.view_progress, name='view-progress'),
+    path('account/settings', views.parametre, name="parametre"),
 ]

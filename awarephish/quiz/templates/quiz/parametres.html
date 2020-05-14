@@ -67,21 +67,22 @@
 						<div class="2u">
 							<section id="sidebar1" >
 								<header>
-									<h2> </h2>
+									<h2>compte</h2>
 								</header>
 								<div class="btn-group-vertical">
 									<a class="btn btn-dark" href="{% url 'account' %}">Infos</a>
-									<a class="btn btn-dark " href="{% url 'homework' %}">Devoirs</a>
-									<a class="btn btn-info active" href="{% url 'progress' %}">Progrès</a>
-									<a class="btn btn-dark " href="{%url 'parametre'%}">Paramètres</a>
+									<a class="btn btn-dark" href="{% url 'homework' %}">Devoirs</a>
+									<a class="btn btn-dark " href="{% url 'progress' %}">Progrès</a>
+									<a class="btn btn-info active " href="{%url 'parametre'%}">Paramètres</a>
 									
 								</div>
 							</section>
 						</div>	
 						
-						<div class="8u skel-cell-important">
+						<div class="9u skel-cell-important">
 							<section id="content">
-								<canvas id="mechart"></canvas>
+								<form class="form-group">
+									<input class="custom-form"
 							</section>
 						</div>
 						
@@ -136,52 +137,8 @@
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
 		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
 		<script src="{%static 'quiz/js/init.js' %}"></script>
-		
-	<script type="text/JavaScript">
-	$(document).ready( function() {
-		$.ajax({
-			url : '{%url "view-progress" %}',
-			type : 'get',
-			success : function(result){
-				Date.prototype.formatDDMMYYYY = function() { 
-					return (this.getHours()+":"+ (( 0<this.getMinutes() && this.getMinutes() < 10 ) ? "0"+this.getMinutes():this.getMinutes())+" "+(( 0< this.getDate() && this.getDate() < 10 ) ? "0"+this.getDate():this.getDate())+ "/" + ((0<(this.getMonth()+1) && (this.getMonth()+1) < 10 ) ? "0"+(this.getMonth()+1): (this.getMonth()+1))+"/"+this.getFullYear());
-				};
-				var labels = [], data = Array.from(result.progress.y);
-				result.progress.x.forEach(function(stamp){labels.push(new Date(stamp).formatDDMMYYYY()); })
-				var ctx = document.getElementById('mechart').getContext('2d');
-				var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
-
-    // The data for our dataset
-    data: {
-        labels: labels,
-        datasets: [{
-            label: 'Progrès au cours du temps',
-            backgroundColor: 'lightblue',
-            borderColor: 'rgb(255, 99, 132)',
-			pointStrokeColor      : "#fff",
-          	pointHighlightFill    : "#fff",
-          	pointHighlightStroke  : "rgba(151,187,205,1)",
-            data: data
-        }]
-    },
-
-    // Configuration options go here
-    options: {}
-});
-			},
-			error : function(result){
-				console.log("error\n"+result);
-			}
-		});
-	});
-
-	</script>
-
 	</body>
 </html>

@@ -5,10 +5,8 @@ def evaluate_level(score):
         return "Niveau 1"
     elif score < 200:
         return "Niveau 2"
-    elif score < 300:
+    elif score <= 300:
         return "Niveau 3"
-    else:
-        return "advanced"
 
 def get_nextlevel_score(curr_level):
     """Return necessary score for next level"""

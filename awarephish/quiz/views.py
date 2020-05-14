@@ -1,6 +1,8 @@
 import random
 import datetime
 
+from statistics import mean
+
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
@@ -13,6 +15,7 @@ from .models import Utilisateur, Question, Progres, Quiztest, Devoir
 from .utils import evaluate_level, get_user_answers, message_level, get_nextlevel_score
 # Create your views here.
 
+# TODO : add security stuff (password policy validator, change password)
 def redir(request):
     return redirect('/index/')
 
@@ -59,9 +62,12 @@ def conseils(request):
 def account(request):
     user = get_object_or_404(Utilisateur, user=request.user)
     return render(request,'quiz/account.html',{'score':user.score_actuel,
-                                                'user':user,
+                                                'users':user,
                                                 'next':get_nextlevel_score(user.niveau_actuel),
-                                                'progress':round((user.score_actuel/get_nextlevel_score(user.niveau_actuel))*100,2)
+                                                'progress':round((user.score_actuel/get_nextlevel_score(user.niveau_actuel))*100,2),
+                                                'remainder':get_nextlevel_score(user.niveau_actuel) - user.score_actuel,
+                                                'ratio':round((user.total_reponse_correctes/user.total_reponse)*100,2),
+                                                'mean': mean(p.score_test for p in user.progres_set.all())
                                                 })
 
 def level_quiz(request):
@@ -138,8 +144,11 @@ def resultquiz(request):
     user.total_reponse_correctes += nbr_reponse_correcte
 
     user.niveau_actuel = evaluate_level(user.score_actuel)
+    try:
+        homeworks = [random.choice(Devoir.objects.filter(difficulty_devoir=user.niveau_actuel,type_devoir=typ).exclude(utilisateur=user))for typ in ["video","texte"]]
+    except IndexError:
+        homeworks=[]
 
-    homeworks = [random.choice(Devoir.objects.filter(difficulty_devoir=user.niveau_actuel,type_devoir=typ).exclude(utilisateur=user))for typ in ["video","texte"]]
     user.homework.set(homeworks+list(user.homework.all()))
     
     user.progres_set.create(date_test=timezone.now(), score_test=score)
@@ -147,9 +156,6 @@ def resultquiz(request):
     next_level = get_nextlevel_score(user.niveau_actuel)
 
     return JsonResponse({'status':1, 'result':score,'actual':user.score_actuel , 'level':user.niveau_actuel,'next':next_level})
-
-    
-
 
 def view_progress(request):
     user = get_object_or_404(Utilisateur, user=request.user)
@@ -168,3 +174,7 @@ def homework(request):
 @login_required
 def progress(request):
     return render(request,"quiz/progress.html")
+
+@login_required
+def parametre(request):
+    return render(request,'quiz/parametres.html')
