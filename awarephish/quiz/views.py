@@ -15,6 +15,7 @@ from .models import Utilisateur, Question, Progres, Quiztest, Devoir
 from .utils import evaluate_level, get_user_answers, message_level, get_nextlevel_score
 # Create your views here.
 
+# TODO : add security stuff (password policy validator, change password)
 def redir(request):
     return redirect('/index/')
 
