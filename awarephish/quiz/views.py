@@ -157,9 +157,6 @@ def resultquiz(request):
 
     return JsonResponse({'status':1, 'result':score,'actual':user.score_actuel , 'level':user.niveau_actuel,'next':next_level})
 
-    
-
-
 def view_progress(request):
     user = get_object_or_404(Utilisateur, user=request.user)
     prog = { 
@@ -177,3 +174,7 @@ def homework(request):
 @login_required
 def progress(request):
     return render(request,"quiz/progress.html")
+
+@login_required
+def parametre(request):
+    return render(request,'quiz/parametres.html')
