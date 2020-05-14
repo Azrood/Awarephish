@@ -93,12 +93,18 @@
 												<img src="{% if score == 300 %}{% static 'quiz/images/trophy.png' %}{% else %}{% static 'quiz/images/trophy.png'%}{%endif%}"><br>
 												<div class="text-light font-weight-bold badge badge-pill badge-dark no-gutter" style="position:relative;right:25px;">
 													Formation complétée
-
 												</div>
 											</div>
 										</div>
-									
-									<header><h2>Votre score est {{score}}<br>Vous êtes au {{users.niveau_actuel}}</h2></header>
+									<hr>
+									<header>
+										<h3 class="h2 text-dark font-weight-bold font-weight-normal">Votre score est <span class="badge badge-pill badge-primary">{{score}}</span>
+										<br><hr>Vous êtes au <span class="badge badge-primary badge-pill">{{users.niveau_actuel}}</span>
+										<br><hr>Vous avez eu <span class="badge badge-primary badge-pill">{{users.total_reponse_correctes}}</span> réponses correctes
+										<br><hr>Vous avez un total de <span class="badge badge-primary badge-pill">{{users.total_reponse}}</span> réponses
+										<br><hr>Votre ratio est de <span class=" badge badge-primary badge-pill">{{ratio}}%</span> et votre score moyen est <span class=" badge badge-primary badge-pill">{{mean}}</span>
+										</h3>
+									</header>
 							</section>
 						</div>
 						
