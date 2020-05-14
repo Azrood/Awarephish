@@ -1,6 +1,8 @@
 import random
 import datetime
 
+from statistics import mean
+
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
@@ -63,6 +65,8 @@ def account(request):
                                                 'next':get_nextlevel_score(user.niveau_actuel),
                                                 'progress':round((user.score_actuel/get_nextlevel_score(user.niveau_actuel))*100,2),
                                                 'remainder':get_nextlevel_score(user.niveau_actuel) - user.score_actuel,
+                                                'ratio':round((user.total_reponse_correctes/user.total_reponse)*100,2),
+                                                'mean': mean(p.score_test for p in user.progres_set.all())
                                                 })
 
 def level_quiz(request):
