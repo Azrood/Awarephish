@@ -11,7 +11,7 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<noscript>
 			<link rel="stylesheet" href="css/skel-noscript.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -80,31 +80,49 @@
 						
 						<div class="9u skel-cell-important">
 							<section id="content">
-								<header class="active"><h2>Bienvenue {{users}}</h2></header><br>
-								<div class="progress" style="height: 30px;"><div class="progress-bar progress-bar-striped progress-bar-animated bg-{% if score == 300 %}success{% else %}warning{%endif%}" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{progress}}%; color:#323338; font-weight:bold;text-align:center;">{% if not remainder %} Bravo ! Vous avez atteint le niveau maximal !{%else%}Il vous reste {{remainder}} points {% if next == 300 %}pour compléter la barre{%else%} avant le prochain niveau{%endif%}{%endif%}</div></div><br>
-									
-										<div class="row">
-											<div class="col-5"><img src="{% if users.niveau_actuel >= 'Niveau 1'%}{% static 'quiz/images/bronze.png' %}{%else%}{% static 'quiz/images/locked_medal.png'%}{%endif%}"><br><div class="text-light font-weight-bold badge badge-pill badge-dark" style="position:relative;left:6px;">Niveau 1</div></div>
-											<div class="col-5"><img src="{% if users.niveau_actuel >= 'Niveau 2'%}{% static 'quiz/images/silver.png' %}{%else%}{% static 'quiz/images/locked_medal.png'%}{%endif%}"><br><div class="text-light font-weight-bold badge badge-pill badge-dark" style="position:relative;left:6px;">Niveau 2</div></div>
-											<div class="col-2"><img src="{% if users.niveau_actuel >= 'Niveau 3'%}{% static 'quiz/images/gold.png' %}{% else %}{% static 'quiz/images/locked_medal.png'%}{%endif%}"><br><div class="text-light font-weight-bold badge badge-pill badge-dark" style="position:relative;left:6px;">Niveau 3</div></div>
+								<header class="active">
+									<h2>
+										Bienvenue {{users}}
+									</h2>
+								</header>
+								<br>
+								<div class="progress" style="height: 35px;">
+									<div class="progress-bar progress-bar-striped progress-bar-animated bg-{% if score == 300 %}success{% else %}warning{%endif%}" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:{{progress}}%; color:black; font-weight:bold;text-align:center;">
+										{% if not remainder %} 
+											Bravo ! Vous avez atteint le niveau maximal !
+										{%else%}
+											Il vous reste {{remainder}} points 
+											{% if next == 300 %}
+												pour compléter la barre
+											{%else%}
+												avant le prochain niveau
+											{%endif%}
+										{%endif%}
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-5"><img src="{% if users.niveau_actuel >= 'Niveau 1'%}{% static 'quiz/images/bronze.png' %}{%else%}{% static 'quiz/images/locked_medal.png'%}{%endif%}"><br><div class="text-light font-weight-bold badge badge-pill badge-dark" style="position:relative;left:6px;">Niveau 1</div></div>
+									<div class="col-5"><img src="{% if users.niveau_actuel >= 'Niveau 2'%}{% static 'quiz/images/silver.png' %}{%else%}{% static 'quiz/images/locked_medal.png'%}{%endif%}"><br><div class="text-light font-weight-bold badge badge-pill badge-dark" style="position:relative;left:6px;">Niveau 2</div></div>
+									<div class="col-2"><img src="{% if users.niveau_actuel >= 'Niveau 3'%}{% static 'quiz/images/gold.png' %}{% else %}{% static 'quiz/images/locked_medal.png'%}{%endif%}"><br><div class="text-light font-weight-bold badge badge-pill badge-dark" style="position:relative;left:6px;">Niveau 3</div></div>
+								</div>
+								<div class="row">
+									<div class="col offset-5">
+										<img src="{% if score == 300 %}{% static 'quiz/images/trophy.png' %}{% else %}{% static 'quiz/images/locked_trophy.png'%}{%endif%}"><br>
+										<div class="text-light font-weight-bold badge badge-pill badge-dark no-gutter" style="position:relative;right:25px;">
+											Formation complétée
 										</div>
-										<div class="row">
-											<div class="col offset-5">
-												<img src="{% if score == 300 %}{% static 'quiz/images/trophy.png' %}{% else %}{% static 'quiz/images/locked_trophy.png'%}{%endif%}"><br>
-												<div class="text-light font-weight-bold badge badge-pill badge-dark no-gutter" style="position:relative;right:25px;">
-													Formation complétée
-												</div>
-											</div>
-										</div>
-									<hr>
-									<header>
-										<h3 class="h2 text-dark font-weight-bold font-weight-normal">Votre score est <span class="badge badge-pill badge-primary">{{score}}</span>
-										<br><hr>Vous êtes au <span class="badge badge-primary badge-pill">{{users.niveau_actuel}}</span>
-										<br><hr>Vous avez eu <span class="badge badge-primary badge-pill">{{users.total_reponse_correctes}}</span> réponses correctes
-										<br><hr>Vous avez un total de <span class="badge badge-primary badge-pill">{{users.total_reponse}}</span> réponses
-										<br><hr>Votre ratio est de <span class=" badge badge-primary badge-pill">{{ratio}}%</span> et votre score moyen est <span class=" badge badge-primary badge-pill">{{mean}}</span>
-										</h3>
-									</header>
+									</div>
+								</div>
+								<hr>
+								<header>
+									<h3 class="h2 text-dark font-weight-bold font-weight-normal">Votre score est <span class="badge badge-pill badge-primary">{{score}}</span>
+									<br><hr>Vous êtes au <span class="badge badge-primary badge-pill">{{users.niveau_actuel}}</span>
+									<br><hr>Vous avez eu <span class="badge badge-primary badge-pill">{{users.total_reponse_correctes}}</span> réponses correctes
+									<br><hr>Vous avez un total de <span class="badge badge-primary badge-pill">{{users.total_reponse}}</span> réponses
+									<br><hr>Votre ratio est de <span class=" badge badge-primary badge-pill">{{ratio}}%</span> et votre score moyen est <span class=" badge badge-primary badge-pill">{{mean}}</span>
+									</h3>
+								</header>
 							</section>
 						</div>
 						

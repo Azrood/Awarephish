@@ -5,12 +5,13 @@ from statistics import mean
 
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.db.models import Q
 from django.utils import timezone
 
-from .forms import SignupForm, SigninForm
+from .forms import SignupForm, SigninForm, ChangePass
 from .models import Utilisateur, Question, Progres, Quiztest, Devoir
 from .utils import evaluate_level, get_user_answers, message_level, get_nextlevel_score
 # Create your views here.
@@ -67,7 +68,7 @@ def account(request):
                                                 'progress':round((user.score_actuel/get_nextlevel_score(user.niveau_actuel))*100,2),
                                                 'remainder':get_nextlevel_score(user.niveau_actuel) - user.score_actuel,
                                                 'ratio':round((user.total_reponse_correctes/user.total_reponse)*100,2),
-                                                'mean': mean(p.score_test for p in user.progres_set.all())
+                                                'mean': round(mean(p.score_test for p in user.progres_set.all()),2),
                                                 })
 
 def level_quiz(request):
@@ -175,6 +176,17 @@ def homework(request):
 def progress(request):
     return render(request,"quiz/progress.html")
 
+
 @login_required
 def parametre(request):
-    return render(request,'quiz/parametres.html')
+    pass_form = ChangePass(user=request.user)
+    if request.method == 'POST':
+        if "pass_change" in request.POST:
+            pass_form = ChangePass(user=request.user, data=request.POST)
+            if pass_form.is_valid():
+                pass_form.save()
+                update_session_auth_hash(request, pass_form.user)
+                messages.success(request, 'Votre mot de passe a été changé avec succès')
+        elif "mail_change" in request.POST:
+            pass
+    return render(request, 'quiz/parametres.html', {'passform':pass_form})
