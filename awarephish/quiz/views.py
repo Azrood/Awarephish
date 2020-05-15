@@ -67,7 +67,7 @@ def account(request):
                                                 'progress':round((user.score_actuel/get_nextlevel_score(user.niveau_actuel))*100,2),
                                                 'remainder':get_nextlevel_score(user.niveau_actuel) - user.score_actuel,
                                                 'ratio':round((user.total_reponse_correctes/user.total_reponse)*100,2),
-                                                'mean': mean(p.score_test for p in user.progres_set.all())
+                                                'mean': round(mean(p.score_test for p in user.progres_set.all()),2),
                                                 })
 
 def level_quiz(request):
