@@ -97,7 +97,7 @@
 									</form>
 									<hr>
 								<header><h2>Changer l'email</h2></header>
-								<form class="form-horizontal">
+								<form class="form-horizontal" method="POST">
 									{%csrf_token%}
 									{% for f in mailform %}
 									<div class="form-group">
@@ -168,7 +168,9 @@
 		<script src="{%static 'quiz/js/init.js' %}"></script>
 		<script type="text/JavaScript">	
 			$(".errorlist").addClass("bg-danger text-white");
-			$("#id_new_password1, #id_new_password2, #id_old_password, #id_old_mail,#id_new_email,#id_current_password").addClass("form-control");
+			$("#id_new_password1, #id_new_password2, #id_old_password,#id_new_email,#id_current_password").addClass("form-control");
+			$('#id_old_mail').addClass("form-control-plaintext");
+			$('#id_old_mail').attr('readonly','');
 		</script>
 	</body>
 </html>

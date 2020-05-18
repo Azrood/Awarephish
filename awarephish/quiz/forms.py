@@ -28,7 +28,7 @@ class SignupForm(forms.Form):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
-            raise ValidationError("Les mots de passes ne correspondent pas")
+            raise forms.ValidationError("Les mots de passes ne correspondent pas")
         return password2
 
     def save(self, commit=True):
@@ -92,3 +92,20 @@ class ChangeMail(forms.Form):
         if not self.user.check_password(current_password):
             raise forms.ValidationError(self.error_messages['password_incorrect'], code='password_incorrect',)
         return current_password
+    
+    def clean_new_email(self):
+        """
+        Prevents an e-mail address that is already registered from being registered by a different user.
+        """
+        email = self.cleaned_data.get('new_email')
+        if Utilisateur.user.get_queryset().filter(email=email).count() > 0:
+            raise forms.ValidationError(self.error_messages['email_inuse'], code='email_inuse',)
+        return email
+
+    def clean_old_mail(self):
+        return self.cleaned_data['old_mail']
+
+    def save(self, commit=True):
+        self.user.email=self.cleaned_data["new_email"]
+        self.user.save()
+        return self.user
