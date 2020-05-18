@@ -1,7 +1,7 @@
 import random
 import datetime
 
-from statistics import mean
+from statistics import mean, StatisticsError
 
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.utils import timezone
 
-from .forms import SignupForm, SigninForm, ChangePass
+from .forms import SignupForm, SigninForm, ChangePass, ChangeMail
 from .models import Utilisateur, Question, Progres, Quiztest, Devoir
 from .utils import evaluate_level, get_user_answers, message_level, get_nextlevel_score
 # Create your views here.
@@ -62,14 +62,24 @@ def conseils(request):
 
 def account(request):
     user = get_object_or_404(Utilisateur, user=request.user)
-    return render(request,'quiz/account.html',{'score':user.score_actuel,
-                                                'users':user,
-                                                'next':get_nextlevel_score(user.niveau_actuel),
-                                                'progress':round((user.score_actuel/get_nextlevel_score(user.niveau_actuel))*100,2),
-                                                'remainder':get_nextlevel_score(user.niveau_actuel) - user.score_actuel,
-                                                'ratio':round((user.total_reponse_correctes/user.total_reponse)*100,2),
-                                                'mean': round(mean(p.score_test for p in user.progres_set.all()),2),
-                                                })
+    try:
+        ratio = round((user.total_reponse_correctes/user.total_reponse)*100,2)
+        
+    except ZeroDivisionError:
+        ratio = 0
+    finally:
+        try:
+            moyenne = round(mean(p.score_test for p in user.progres_set.all()),2)
+        except StatisticsError:
+            moyenne = 0
+        return render(request,'quiz/account.html',{'score':user.score_actuel,
+                                                    'users':user,
+                                                    'next':get_nextlevel_score(user.niveau_actuel),
+                                                    'progress':round((user.score_actuel/get_nextlevel_score(user.niveau_actuel))*100,2),
+                                                    'remainder':get_nextlevel_score(user.niveau_actuel) - user.score_actuel,
+                                                    'ratio':ratio,
+                                                    'mean': moyenne,
+                                                    })
 
 def level_quiz(request):
     r=[]
@@ -180,6 +190,7 @@ def progress(request):
 @login_required
 def parametre(request):
     pass_form = ChangePass(user=request.user)
+    mail_form = ChangeMail(user=request.user,initial={'old_mail':request.user.email})
     if request.method == 'POST':
         if "pass_change" in request.POST:
             pass_form = ChangePass(user=request.user, data=request.POST)
@@ -188,5 +199,8 @@ def parametre(request):
                 update_session_auth_hash(request, pass_form.user)
                 messages.success(request, 'Votre mot de passe a été changé avec succès')
         elif "mail_change" in request.POST:
-            pass
-    return render(request, 'quiz/parametres.html', {'passform':pass_form})
+            mail_form = ChangeMail(user=request.user, data=request.POST)
+            if mail_form.is_valid():
+                mail_form.save()
+                messages.success(request, 'Votre adresse mail a été modifiée avec succès')
+    return render(request, 'quiz/parametres.html', {'passform':pass_form, 'mailform':mail_form})

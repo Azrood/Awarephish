@@ -28,7 +28,7 @@ class SignupForm(forms.Form):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
-            raise ValidationError("Les mots de passes ne correspondent pas")
+            raise forms.ValidationError("Les mots de passes ne correspondent pas")
         return password2
 
     def save(self, commit=True):
@@ -49,13 +49,13 @@ class SigninForm(AuthenticationForm):
 
 class ChangePass(PasswordChangeForm):
     new_password1 = forms.CharField(
-        label=("Nouveau mot de passe"),
+        label="Nouveau mot de passe",
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password','placeholder':'Entrez votre nouveau mot de passe'}),
         strip=False,
         help_text="Au minimum 8 caractères.\nDoit contenir au moins un caractère numérique, une majuscule et un symbole",
     )
     new_password2 = forms.CharField(
-        label=("Confirmation du nouveau mot de passe"),
+        label="Confirmation du nouveau mot de passe",
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password','placeholder':'Confirmer votre nouveau mot de passe'}),
     )
@@ -69,3 +69,43 @@ class ChangePass(PasswordChangeForm):
         'password_mismatch':('Les mots de passe ne correspondent pas'),
         'password_incorrect':("Votre ancien mot de passe est incorrect"),
     }
+
+class ChangeMail(forms.Form):
+    error_messages={
+        'email_inuse': "Cette adresse est déjà enregistrée.",
+        'password_incorrect': 'Mot de passe incorrect'
+}
+
+    old_mail = forms.EmailField(label='Adresse Email actuelle',widget=forms.EmailInput(attrs={'placeholder':'Entrer votre adresse actuelle'}))
+    new_email = forms.EmailField(label='Nouvelle adresse Email',widget=forms.EmailInput(attrs={'placeholder':'Entrez votre nouvelle adresse email'}))
+    current_password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={'placeholder':'entrez votre mot de passe pour confirmer'}),required=True)
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(ChangeMail, self).__init__(*args, **kwargs)
+    
+    def clean_current_password(self):
+        """
+        Validates that the password field is correct.
+        """
+        current_password = self.cleaned_data["current_password"]
+        if not self.user.check_password(current_password):
+            raise forms.ValidationError(self.error_messages['password_incorrect'], code='password_incorrect',)
+        return current_password
+    
+    def clean_new_email(self):
+        """
+        Prevents an e-mail address that is already registered from being registered by a different user.
+        """
+        email = self.cleaned_data.get('new_email')
+        if Utilisateur.user.get_queryset().filter(email=email).count() > 0:
+            raise forms.ValidationError(self.error_messages['email_inuse'], code='email_inuse',)
+        return email
+
+    def clean_old_mail(self):
+        return self.cleaned_data['old_mail']
+
+    def save(self, commit=True):
+        self.user.email=self.cleaned_data["new_email"]
+        self.user.save()
+        return self.user
