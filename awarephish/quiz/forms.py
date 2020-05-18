@@ -49,13 +49,13 @@ class SigninForm(AuthenticationForm):
 
 class ChangePass(PasswordChangeForm):
     new_password1 = forms.CharField(
-        label=("Nouveau mot de passe"),
+        label="Nouveau mot de passe",
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password','placeholder':'Entrez votre nouveau mot de passe'}),
         strip=False,
         help_text="Au minimum 8 caractères.\nDoit contenir au moins un caractère numérique, une majuscule et un symbole",
     )
     new_password2 = forms.CharField(
-        label=("Confirmation du nouveau mot de passe"),
+        label="Confirmation du nouveau mot de passe",
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password','placeholder':'Confirmer votre nouveau mot de passe'}),
     )
@@ -69,3 +69,26 @@ class ChangePass(PasswordChangeForm):
         'password_mismatch':('Les mots de passe ne correspondent pas'),
         'password_incorrect':("Votre ancien mot de passe est incorrect"),
     }
+
+class ChangeMail(forms.Form):
+    error_messages={
+        'email_inuse': "Cette adresse est déjà enregistrée.",
+        'password_incorrect': 'Mot de passe incorrect'
+}
+
+    old_mail = forms.EmailField(label='Adresse Email actuelle',widget=forms.EmailInput(attrs={'placeholder':'Entrer votre adresse actuelle'}))
+    new_email = forms.EmailField(label='Nouvelle adresse Email',widget=forms.EmailInput(attrs={'placeholder':'Entrez votre nouvelle adresse email'}))
+    current_password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={'placeholder':'entrez votre mot de passe pour confirmer'}),required=True)
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(ChangeMail, self).__init__(*args, **kwargs)
+    
+    def clean_current_password(self):
+        """
+        Validates that the password field is correct.
+        """
+        current_password = self.cleaned_data["current_password"]
+        if not self.user.check_password(current_password):
+            raise forms.ValidationError(self.error_messages['password_incorrect'], code='password_incorrect',)
+        return current_password

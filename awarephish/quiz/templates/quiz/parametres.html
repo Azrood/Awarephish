@@ -83,6 +83,7 @@
 									{%endfor%}
 								</ul>
 								{%endif%}
+								<header><h2>Changer le mot de passe</h2></header>
 								<form class="form-horizontal" method="POST">
 									{% csrf_token %}
 									{% for f in passform %}
@@ -94,6 +95,20 @@
 									{%endfor%}
 									<input type="submit" value="confirmer" name="pass_change" class="btn btn-dark active">
 									</form>
+									<hr>
+								<header><h2>Changer l'email</h2></header>
+								<form class="form-horizontal">
+									{%csrf_token%}
+									{% for f in mailform %}
+									<div class="form-group">
+										{{f.errors}}<br>
+										<label for="id_{{f.name}}"><strong>{{f.label}}</strong></label>{{f}}
+										<span class="helptext">{{f.help_text}}</span>
+									</div>
+									{%endfor%}
+									<input type="submit" value="confirmer" name="mail_change" class="btn btn-dark active">
+									
+								</form>
 							</section>
 						</div>
 						
@@ -153,7 +168,7 @@
 		<script src="{%static 'quiz/js/init.js' %}"></script>
 		<script type="text/JavaScript">	
 			$(".errorlist").addClass("bg-danger text-white");
-			$("#id_new_password1, #id_new_password2, #id_old_password").addClass("form-control");
+			$("#id_new_password1, #id_new_password2, #id_old_password, #id_old_mail,#id_new_email,#id_current_password").addClass("form-control");
 		</script>
 	</body>
 </html>
