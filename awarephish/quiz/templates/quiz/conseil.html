@@ -60,9 +60,14 @@
 					<div class="row">
 						<div class="12u skel-cell-important">
 							<article>
-							<section id="content" >
-								<h3><strong>Nos conseils</strong></h3>
-
+							<section id="content">
+								<header><strong><h2>conseils</h2></strong></header>
+								<button type="button" class="font-weight-bolder btn btn-info" data-toggle="collapse" data-target="#dev{{dev.id}}" id=de{{dev.id}}>
+									Vous n'avez pas le temps ? Regardez cette vidéo ! 								</button>
+								<div id="dev" class="collapse">
+									<iframe width="853" height="480" src="https://www.youtube.com/embed/R12_y2BhKbE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+								<hr><br>
 								<p>Si vous recevez un message qui contient des liens ou des pièces jointes, ou un coup de téléphone qui vous semble suspect,
 								essayez de répondre à ces questions avant de commencer à réagir.</p>
 
@@ -117,26 +122,26 @@
 								<p> Si le message vous parait frauduleux, vous devez éviter de cliquer sur les liens et d'insérer vos informations ou de télécharger les pièces jointes.
 								Il est préférable de chercher le site via un moteur de recherche et de ne transférer pas le lien à vos contacts.
 								De plus, si le message est envoyé par une personne que vous connaissez, il serait important de la questionner s'elle est bien l'expéditeur:
-									<ul><li>S’il s’agit d’un ami, vous pouvez l’appeler, envoyer un SMS ou envoyer un message via les réseaux sociaux. 
-									Si le message ne provient pas de votre ami, prévenez-le que son compte a été piraté.
+									<ul class="style1">
+										<li class="first"> &#x25cf S’il s’agit d’un ami, vous pouvez l’appeler, envoyer un SMS ou envoyer un message via les réseaux sociaux.</li>
+									<li class="first">&#x25cf Si le message ne provient pas de votre ami, prévenez-le que son compte a été piraté.
 									Sur certains réseaux sociaux, vous pouvez signaler des messages.</li>
-									<li>S’il s’agit d’une organisation ou d’une entreprise, allez sur leur site et contrôlez si l’action « urgente » dont il est question existe
+									<li class="first">&#x25cf S’il s’agit d’une organisation ou d’une entreprise, allez sur leur site et contrôlez si l’action « urgente » dont il est question existe
 									réellement. Si vous ne trouvez rien, vous pouvez toujours leur téléphoner.</li>
 									</ul>
-									
-								<h3><strong>Si vous avez déja tombé dans la piège?</strong></h3>	 
-								<ul><li>Si vous avez communiqué un mot de passe que vous utilisez pour d’autres sites, modifiez-le immédiatement.</li>
-								<li>Si vous avez communiqué vos coordonnées de votre carte de crédit, prévenez immédiatement Cardstop .</li>
-								<li>Si vous avez fait un virement bancaire ou communiqué vos données bancaires ou les pirates ont pu accéder aux vos informations intimes, vous pouvez toujours déclarer.
-								En effet, la RAT, Recovery Asset Team, a aidé, entre 2018 et 2019, à récupérer plus de 300 millions de dollars perdus à la suite d'arnaques en ligne, pour un taux de retour de 79% des pertes signalées.</li>
-								</ul>
+								</p>
+								<h3><strong>Et si vous êtes déja tombé dans le piège?</strong></h3>	 
+								<p><ul class="style3">
+									<li class="first">&#x25cf Si vous avez communiqué un mot de passe que vous utilisez pour d’autres sites, modifiez-le immédiatement.</li>
+									<li class="first">&#x25cf Si vous avez communiqué vos coordonnées de votre carte bancaire, prévenez immédiatement votre banque .</li>
+									<li class="first">&#x25cf Si vous avez fait un virement bancaire ou communiqué vos données bancaires ou les pirates ont pu accéder aux vos informations intimes, vous pouvez toujours déclarer.
 								
+								</ul>En effet, la RAT, Recovery Asset Team, a aidé, entre 2018 et 2019, à récupérer plus de 300 millions de dollars perdus à la suite d'arnaques en ligne, pour un taux de retour de 79% des pertes signalées.</li>
+								</p>
 								
-								<p>Faites notre Test Phishing pour découvrir si vous vous laisseriez prendre au piège par des cybercriminels.
+								<p>Passez notre test de phishing pour savoir si vous vous laisseriez prendre au piège par des cybercriminels.
 								Vous pouvez aussi suivre une formation pour améliorer vos connaissances.</p>
-								<p> Alors, <a href="#"> testez-vous !! </a> 
-
-
+								<p> Alors, <a href="{% url 'level-quiz' %}" class="btn-primary btn"> testez-vous !! </a> 
 							</section>
 						</article>
 						</div>
@@ -157,7 +162,6 @@
 										<p class="date"><a href="#">FBI 2019 </a></p>
 										<p><a href="https://pdf.ic3.gov/2019_IC3Report.pdf">FBI internet crime report </a></p>
 									</li>
-								
 								</ul>
 							</section>
 						</div>
@@ -192,6 +196,8 @@
 		<script src="{%static 'quiz/js/skel.min.js' %}"></script>
 		<script src="{%static 'quiz/js/skel-panels.min.js' %}"></script>
 		<script src="{%static 'quiz/js/init.js' %}"></script>
-		
+		<script type="text/JavaScript">
+			$('p').attr('style','text-align:justify');
+		</script>
 	</body>
 </html>

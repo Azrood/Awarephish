@@ -11,7 +11,7 @@ class Question(models.Model):
     image = models.ImageField(upload_to='questions', null=True, blank=True)
 
     def __str__(self):
-        return f"{self.id} {self.type_question} {self.difficulty}"
+        return f"Question {self.id}"
 
 class Reponses(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)

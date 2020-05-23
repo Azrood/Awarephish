@@ -6,7 +6,10 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 class SignupForm(forms.Form):
     username = forms.CharField(max_length=150, label='Nom d\'utilisateur', widget=forms.TextInput(attrs={'placeholder':'Entrez le nom d\'utilisateur'}))
-    password1 = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(attrs={'placeholder':'Entrez votre mot de passe'}))
+    password1 = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(
+            attrs={'placeholder':'Entrez votre mot de passe',
+            'pattern':r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", 
+            'title':"Doit contenir au moins un nombre, une lettre majuscule et une lettre minuscule, et au moins 8 caractères"}))
     password2 = forms.CharField(label='Confirmer le mot de passe', widget=forms.PasswordInput(attrs={'placeholder':'Confirmer votre mot de passe'}))
     email = forms.EmailField(label='Adresse Email',widget=forms.EmailInput(attrs={'placeholder':'Entrez votre email'}))
 

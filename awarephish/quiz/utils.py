@@ -29,3 +29,12 @@ def message_level(level:str):
         return "Votre score est moyen, nous vous conseillons de lire nos conseils et de vous inscrire pour améliorer votre niveau et ne plus tomber dans le piège des cybercriminels"
     elif level == "Niveau 3":
         return "Vous avez un bon score, vous tombez rarement dans le piège, nous vous conseillons toutefois de vous inscrire ou de lire nos conseils pour rester sur vos gardes."
+
+def evaluate_level_test(score):
+    assert 0<= score <= 10
+    if score < 3:
+        return "Niveau 1"
+    elif score < 6:
+        return "Niveau 2"
+    else:
+        return "Niveau 3"

@@ -17,8 +17,8 @@
 		background: #f3f2ed;
 		font-family: 'Lato', sans-serif;
 		font-size: 12pt;
-		font-weight: 300;
-		color: #8A8A8A;
+		font-weight: 400;
+		color: rgb(90, 90, 90);
 	}
 
 	h1, h2, h3 {
@@ -38,7 +38,7 @@
 
 	strong {
 		font-weight: 700;
-		color: #2A2A2A;
+		color: rgb(29, 29, 29);
 	}
 
 	/* Images */
@@ -683,8 +683,8 @@ ul.style3 .first {
 
 
 	#page {
-		padding: 5em 0em;
-		background: #FFF
+		padding: 5em 0em;/*rgb(178, 225, 255)*/
+		background: linear-gradient(#d7eff8,rgb(178, 225, 255));/*linear-gradient(#d7eff8,lightblue);*/
 	}
 	
 	#content header
