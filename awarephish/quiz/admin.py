@@ -17,7 +17,8 @@ class QuestionAdmin(admin.ModelAdmin):
                 'fields':['question_text','image']}),
     ]
     inlines = [ReponsesAdmin]
-    list_filter=[]
+    list_filter=['type_question','difficulty']
+    list_display=['__str__','type_question','difficulty','note']
 
 class DevoirAdmin(admin.ModelAdmin):
     fieldsets = [
