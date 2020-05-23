@@ -7,7 +7,46 @@
 		<meta name="keywords" content="" />
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+		<style>
+			
+			
+			/* The message box is shown when the user clicks on the password field */
+			#message {
+			  display:none;
+			  background: rgba(0,0,0,0);
+			  color: #000;
+			  position: relative;
+			  padding: 20px;
+			  margin-top: 10px;
+			}
+			
+			#message p {
+			  padding: 10px 35px;
+			  font-size: 18px;
+			}
+			
+			/* Add a green text color and a checkmark when the requirements are right */
+			.valid {
+			  color: green;
+			}
+			
+			.valid:before {
+			  position: relative;
+			  left: -35px;
+			  content: "✔";
+			}
+			
+			/* Add a red text color and an "x" when the requirements are wrong */
+			.invalid {
+			  color: red;
+			}
+			
+			.invalid:before {
+			  position: relative;
+			  left: -35px;
+			  content: "✖";
+			}
+			</style>
 		<noscript>
 			<link rel="stylesheet" href="{% static 'quiz/css/skel-noscript.css' %}" />
 			<link rel="stylesheet" href="{% static 'quiz/css/style.css'%}" />
@@ -68,6 +107,13 @@
 											{{f.errors}}<br>
 											<label for="id_{{f.name}}"><strong>{{f.label}}</strong></label>{{f}}
 										</div>
+										{% if f.name == "password1" %}<div id="message">
+											<h3>Votre mot de passe doit contenir au moins :</h3>
+											<p id="letter" class="invalid">Une lettre <span class="font-weight-bold">minuscule</span></p>
+											<p id="capital" class="invalid">Une lettre <span class="font-weight-bold">majuscule</span></p>
+											<p id="number" class="invalid">Un <span class="font-weight-bold">nombre</span></p>
+											<p id="length" class="invalid">Au minimum <span class="font-weight-bold">8 caractères</span></p>
+										  </div>{% endif%}
 										{%endfor%}
 										<input type="submit" value="S'inscrire" class="button btn btn-block btn-default">
 									</form>
@@ -133,5 +179,64 @@
 			$(".errorlist").addClass("bg-danger text-white");
 			$("#id_username, #id_password1, #id_email, #id_password2").addClass("form-control");
 		</script>
+		<script>
+			var myInput = document.getElementById("id_password1");
+			var letter = document.getElementById("letter");
+			var capital = document.getElementById("capital");
+			var number = document.getElementById("number");
+			var length = document.getElementById("length");
+			
+			// When the user clicks on the password field, show the message box
+			myInput.onfocus = function() {
+			  document.getElementById("message").style.display = "block";
+			}
+			
+			// When the user clicks outside of the password field, hide the message box
+			myInput.onblur = function() {
+			  document.getElementById("message").style.display = "none";
+			}
+			
+			// When the user starts to type something inside the password field
+			myInput.onkeyup = function() {
+			  // Validate lowercase letters
+			  var lowerCaseLetters = /[a-z]/g;
+			  if(myInput.value.match(lowerCaseLetters)) {  
+				letter.classList.remove("invalid");
+				letter.classList.add("valid");
+			  } else {
+				letter.classList.remove("valid");
+				letter.classList.add("invalid");
+			  }
+			  
+			  // Validate capital letters
+			  var upperCaseLetters = /[A-Z]/g;
+			  if(myInput.value.match(upperCaseLetters)) {  
+				capital.classList.remove("invalid");
+				capital.classList.add("valid");
+			  } else {
+				capital.classList.remove("valid");
+				capital.classList.add("invalid");
+			  }
+			
+			  // Validate numbers
+			  var numbers = /[0-9]/g;
+			  if(myInput.value.match(numbers)) {  
+				number.classList.remove("invalid");
+				number.classList.add("valid");
+			  } else {
+				number.classList.remove("valid");
+				number.classList.add("invalid");
+			  }
+			  
+			  // Validate length
+			  if(myInput.value.length >= 8) {
+				length.classList.remove("invalid");
+				length.classList.add("valid");
+			  } else {
+				length.classList.remove("valid");
+				length.classList.add("invalid");
+			  }
+			}
+			</script>
 	</body>
 </html>
