@@ -13,7 +13,7 @@ from django.utils import timezone
 
 from .forms import SignupForm, SigninForm, ChangePass, ChangeMail
 from .models import Utilisateur, Question, Progres, Quiztest, Devoir
-from .utils import evaluate_level, get_user_answers, message_level, get_nextlevel_score
+from .utils import evaluate_level, get_user_answers, message_level, get_nextlevel_score, evaluate_level_test
 # Create your views here.
 
 # TODO : add security stuff (password policy validator, change password)
@@ -110,10 +110,10 @@ def result(request):
                 else:
                     score -= answer_score
 
-    score = max(round(score/scoretest,2)*300, 0)
-    level = evaluate_level(score)
+    score = round(max((score/scoretest)*10, 0),1)
+    level = evaluate_level_test(score)
     message = message_level(level)
-    return JsonResponse({'status':1,'score':score, 'level':level,'message':message})
+    return JsonResponse({'status':1,'score':f"{score}/10", 'level':level,'message':message})
 
 @login_required(login_url='/signin/')
 def phishquiz(request):
