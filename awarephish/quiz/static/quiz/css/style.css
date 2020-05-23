@@ -684,7 +684,7 @@ ul.style3 .first {
 
 	#page {
 		padding: 5em 0em;/*rgb(178, 225, 255)*/
-		background: #d7eff8;
+		background: linear-gradient(#d7eff8,rgb(178, 225, 255));/*linear-gradient(#d7eff8,lightblue);*/
 	}
 	
 	#content header
