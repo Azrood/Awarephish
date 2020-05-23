@@ -55,7 +55,64 @@
 			<div id="page">
 				<div class="container">
 					<div class="row">
-						<div class="3u">
+						<div class="2u">
+							<section id="sidebar1">
+								<header>
+									<h2>Actualités</h2>
+								</header>
+								<ul class="style3">
+									
+									<li>
+										<span class="first fa fa-asterisk"></span><a href="https://www.theregister.co.uk/2020/05/21/gitlab_phishing_pentest/" target="_blank"> Gitlab envoie des mails de phishing au personnel pour tester sa sécurité</a>
+									</li>
+									<li>
+									<span class="first fa fa-asterisk"></span><a href="https://blog.checkpoint.com/2020/05/12/coronavirus-cyber-attacks-update-beware-of-the-phish/" target="_blank">Les attaques de phishing sont en hausse dans le contexte de la pandémie de coronavirus</a>
+									</li>
+									<li>
+										<span class="first fa fa-asterisk"><a href="https://twitter.com/MsftSecIntel/status/1262504864694726656" target="_blank">Microsoft enquête sur une arnaque par phishing impliquant des fichiers Excel profitant du thème de la pandémie</a> </span>
+
+									</li>
+									<li>
+										<span class="first fa fa-asterisk"><a href="https://www.20minutes.fr/high-tech/2779931-20200516-coronavirus-hackers-piegent-utilisateurs-faisant-passer-site-gouvernemental" target="_blank">Des cybercriminels utilisent des faux sites gouvernementaux pour piéger les utilisateurs</a></p>
+										
+									</li>
+								</ul>
+							</section>
+						</div>
+						<div class="8u skel-cell-important">
+							<section id="content" >
+								<header>
+									<h2>Qu'est-ce que le Phishing ? </h2>
+								</header><p>Le <strong>Phishing</strong> est l’envoi de faux courriels non sollicités dans lesquels on demande aux destinataires,
+								sous différents prétextes, de cliquer sur un lien menant vers un faux site Web ou d’ouvrir une pièce jointe malveillante.
+								Le pirate y récupère les renseignements fournis et les utilise pour détourner des fonds à son avantage.
+								Le faux site Web, tout comme le courriel, semble authentique,
+								car il est souvent une copie conforme du site de l’institution financière ou de l’entreprise. </p>
+								<p>Selon la définition du <strong><u><a href="https://www.nist.gov/">NIST</a></u></strong>, le <strong><u><a href="https://csrc.nist.gov/glossary/term/phishing">phishing</a></u></strong> est une
+									technique permettant de tenter d'acquérir des données sensibles, telles que des numéros de compte bancaire, 
+									par le biais d'une sollicitation frauduleuse par courrier électronique ou sur un site web, 
+									dans laquelle l'auteur se fait passer pour une entreprise légitime ou une personne de bonne réputation.
+								</p>
+								<p> La <strong><u><a href="https://www.cnil.fr/">CNIL</a></u></strong> définit le <u><a href="https://www.cnil.fr/fr/cnil-direct/question/le-phishing-cest-quoi">phishing ou l'hameçonnage</a></u>
+								comme étant une forme d'escroquerie sur internet où
+								le fraudeur se fait passer pour un organisme que vous connaissez (banque, service des impôts, etc.), en utilisant le logo et le nom de cet organisme.</p>
+
+								<p>
+									D'après <strong><u><a href="https://www.ssi.gouv.fr/">ANSSI</a></u></strong>, les attaques d'<u><a href="https://www.ssi.gouv.fr/entreprise/principales-menaces/cybercriminalite/attaque-par-hameconnage-phishing/">hameçonnage</a></u>
+									visent à obtenir les coordonnées bancaires ou les identifiants de connexion à des services financiers du destinataire de courriels d'apparence légitime afin de voler son argent.
+
+								</p>
+								
+								<p>La raison principale pour laquelle ces attaques sont si réussies,
+                                   c’est les utilisateurs eux-mêmes, puisque la plupart d’entre eux ne sont pas suffisamment
+                                   formés sur la façon de reconnaître le phishing. Ainsi, notre site web vise la sensibilisation aux menaces du phishing pour minimiser les pertes.
+								   nous vous proposons de tester votre sécurité en évaluant votre niveau de sensibilisation et savoir jusqu'à quel point vous êtes capables de determiner si un mail
+								   est frauduleux. Nous vous proposerons aussi des devoirs à faire pour que vous puissiez améliorer vos connaissances sur ce sujet.</p>
+								<a href="{%url 'conseils'%}" class="button btn btn-default">Lire nos conseils</a>
+								<a href="{% url 'level-quiz' %}" class="button btn-default btn ">Évaluer votre niveau de sensibilisation</a>
+							</section>
+						</div>
+						<div class="2u">
 							<section id="sidebar1">
 								<header>
 									<h2>Quelques chiffres</h2>
@@ -83,39 +140,7 @@
 									</li>
 								</ul>
 							</section>
-						</div>
-						<div class="8u skel-cell-important">
-							<section id="content" >
-								<header>
-									<h2>Qu'est-ce que le Phishing ? </h2>
-								</header>
-								<p>Selon la définition du <strong><u><a href="https://www.nist.gov/">NIST</a></u></strong>, le <strong><u><a href="https://csrc.nist.gov/glossary/term/phishing">phishing</a></u></strong> est une
-									technique permettant de tenter d'acquérir des données sensibles, telles que des numéros de compte bancaire, 
-									par le biais d'une sollicitation frauduleuse par courrier électronique ou sur un site web, 
-									dans laquelle l'auteur se fait passer pour une entreprise légitime ou une personne de bonne réputation.
-								</p>
-								<p> La <strong><u><a href="https://www.cnil.fr/">CNIL</a></u></strong> définit le <u><a href="https://www.cnil.fr/fr/cnil-direct/question/le-phishing-cest-quoi">phishing ou l'hameçonnage</a></u>
-								comme étant une forme d'escroquerie sur internet où
-								le fraudeur se fait passer pour un organisme que vous connaissez (banque, service des impôts, etc.), en utilisant le logo et le nom de cet organisme.</p>
 
-								<p>
-									D'après <strong><u><a href="https://www.ssi.gouv.fr/">ANSSI</a></u></strong>, les attaques d'<u><a href="https://www.ssi.gouv.fr/entreprise/principales-menaces/cybercriminalite/attaque-par-hameconnage-phishing/">hameçonnage</a></u>
-									visent à obtenir les coordonnées bancaires ou les identifiants de connexion à des services financiers du destinataire de courriels d'apparence légitime afin de voler son argent.
-
-								</p>
-								<p>Le <strong>Phishing</strong> est l’envoi de faux courriels non sollicités dans lesquels on demande aux destinataires,
-								sous différents prétextes, de cliquer sur un lien menant vers un faux site Web ou d’ouvrir une pièce jointe malveillante.
-								Le pirate y récupère les renseignements fournis et les utilise pour détourner des fonds à son avantage.
-								Le faux site Web, tout comme le courriel, semble authentique,
-								car il est souvent une copie conforme du site de l’institution financière ou de l’entreprise. </p>
-								<p>La raison principale pour laquelle ces attaques sont si réussies,
-                                   c’est les utilisateurs eux-mêmes, puisque la plupart d’entre eux ne sont pas suffisamment
-                                   formés sur la façon de reconnaître le phishing. Ainsi, notre site web vise la sensibilisation aux menaces du phishing pour minimiser les pertes.
-								   nous vous proposons de tester votre sécurité en évaluant votre niveau de sensibilisation et savoir jusqu'à quel point vous êtes capables de determiner si un mail
-								   est frauduleux. Nous vous proposerons aussi des devoirs à faire pour que vous puissiez améliorer vos connaissances sur ce sujet.</p>
-								<a href="{%url 'conseils'%}" class="button btn btn-default">Lire nos conseils</a>
-								<a href="{% url 'level-quiz' %}" class="button btn-default btn ">Évaluer votre niveau de sensibilisation</a>
-							</section>
 						</div>
 					</div>
 
@@ -126,21 +151,21 @@
 			<div id="footer">
 				<div class="container">
 					<div class="row">
-						<div class="3u">
+						<div class="5u">
 							<section id="box1">
 								<header>
-									<h2>actualités</h2>		
+									<h2>Contact</h2>		
 								</header>
 								<ul class="style3">
 									<li class="first">
-										<p class="date"><a href="#">FBI 2019 </a></p>
-										<p><a href="https://pdf.ic3.gov/2019_IC3Report.pdf">FBI internet crime report </a></p>
+										<p class="btn fa fa-envelope"> Envoyer un mail</p></li>
+										<li class="first"><p class="fa btn fa-facebook"> Page facebook</a ></p>
+
 									</li>
-								
 								</ul>
 							</section>
 						</div>
-						<div class="5u">
+						<div class="3u">
 							<section id="box2">
 								<header>
 									
@@ -151,7 +176,7 @@
 						<div class="4u">
 							<section id="box3">
 								<header>
-									<h2>des articles externes</h2>
+									<h2>articles externes</h2>
 								</header>
 								<ul class="style1">
 									<li class="first"><a href="https://fr.malwarebytes.com/phishing/">Qu'est-ce que l'hameçonnage ? Types et exemples d'attaques par hameçonnage</a></li>
