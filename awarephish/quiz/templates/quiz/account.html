@@ -116,11 +116,13 @@
 								</div>
 								<hr>
 								<header>
-									<h3 class="h2 text-dark font-weight-bold font-weight-normal">Votre score est <span class="badge badge-pill badge-primary">{{score}}</span>
+									<h3 class="h2 text-dark font-weight-bold font-weight-normal">
+										Votre score est <span class="badge badge-pill badge-primary">{{score}}</span>
 									<br><hr>Vous êtes au <span class="badge badge-primary badge-pill">{{users.niveau_actuel}}</span>
 									<br><hr>Vous avez eu <span class="badge badge-primary badge-pill">{{users.total_reponse_correctes}}</span> réponses correctes
 									<br><hr>Vous avez un total de <span class="badge badge-primary badge-pill">{{users.total_reponse}}</span> réponses
 									<br><hr>Votre ratio est de <span class=" badge badge-primary badge-pill">{{ratio}}%</span> et votre score moyen est <span class=" badge badge-primary badge-pill">{{mean}}</span>
+									<br><hr>Inscrit le : {{user.date_joined | date:"SHORT_DATE_FORMAT"}} {{user.date_joined |time:"H:i"}}
 									</h3>
 								</header>
 							</section>

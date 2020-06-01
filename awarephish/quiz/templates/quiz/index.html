@@ -61,6 +61,9 @@
 									<h2>Actualités</h2>
 								</header>
 								<ul class="style3">
+									<li>
+										<span class="first fa fa-asterisk"></span><a href="https://www.futura-sciences.com/alternative/amp/actualite/81159/"" target="_blank">Microsoft met en garde contre une dangereuse vague de phishing utilisant les chiffres du Covid-19 et Excel</a>
+									</li>
 									
 									<li>
 										<span class="first fa fa-asterisk"></span><a href="https://www.theregister.co.uk/2020/05/21/gitlab_phishing_pentest/" target="_blank"> Gitlab envoie des mails de phishing au personnel pour tester sa sécurité</a>
@@ -109,7 +112,7 @@
 								   nous vous proposons de tester votre sécurité en évaluant votre niveau de sensibilisation et savoir jusqu'à quel point vous êtes capables de determiner si un mail
 								   est frauduleux. Nous vous proposerons aussi des devoirs à faire pour que vous puissiez améliorer vos connaissances sur ce sujet.</p>
 								<a href="{%url 'conseils'%}" class="button btn btn-default">Lire nos conseils</a>
-								<a href="{% url 'level-quiz' %}" class="button btn-default btn ">Évaluer votre niveau de sensibilisation</a>
+								{% if not user.is_authenticated %}<a href="{% url 'level-quiz' %}" class="button btn-default btn ">Évaluer votre niveau de sensibilisation</a>{% else %}<a href="{% url 'phishquiz' %}" class="button btn-default btn ">Passer un quiz</a>{% endif %}
 							</section>
 						</div>
 						<div class="2u">
