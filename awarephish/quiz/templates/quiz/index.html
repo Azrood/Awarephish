@@ -61,6 +61,9 @@
 									<h2>Actualités</h2>
 								</header>
 								<ul class="style3">
+									<li>
+										<span class="first fa fa-asterisk"></span><a href="https://www.futura-sciences.com/alternative/amp/actualite/81159/"" target="_blank">Microsoft met en garde contre une dangereuse vague de phishing utilisant les chiffres du Covid-19 et Excel</a>
+									</li>
 									
 									<li>
 										<span class="first fa fa-asterisk"></span><a href="https://www.theregister.co.uk/2020/05/21/gitlab_phishing_pentest/" target="_blank"> Gitlab envoie des mails de phishing au personnel pour tester sa sécurité</a>
@@ -109,7 +112,7 @@
 								   nous vous proposons de tester votre sécurité en évaluant votre niveau de sensibilisation et savoir jusqu'à quel point vous êtes capables de determiner si un mail
 								   est frauduleux. Nous vous proposerons aussi des devoirs à faire pour que vous puissiez améliorer vos connaissances sur ce sujet.</p>
 								<a href="{%url 'conseils'%}" class="button btn btn-default">Lire nos conseils</a>
-								<a href="{% url 'level-quiz' %}" class="button btn-default btn ">Évaluer votre niveau de sensibilisation</a>
+								{% if not user.is_authenticated %}<a href="{% url 'level-quiz' %}" class="button btn-default btn ">Évaluer votre niveau de sensibilisation</a>{% else %}<a href="{% url 'phishquiz' %}" class="button btn-default btn ">Passer un quiz</a>{% endif %}
 							</section>
 						</div>
 						<div class="2u">
@@ -122,19 +125,15 @@
 										<p class="date">156 millions</p>
 										<p>de courriels d’hameçonnage sont envoyés chaque jour</p>
 									</li>
-									<li>
+									<li class="first">
 										<p class="date">16 millions</p>
 										<p>de courriels d’hameçonnage parviennent à déjouer les filtres.</p>
 									</li>
-									<li>
+									<li class="first">
 										<p class="date">8 millions </p>
 										<p>de courriels d’hameçonnage sont finalement ouverts.</p>
 									</li>
-									<li>
-										<p class="date">800 000 liens </p>
-										<p>sont cliqués par les destinataires.</p>
-									</li>
-									<li>
+									<li class="first">
 										<p class="date">80 000 personnes </p>
 										<p>mordent à l’hameçon et partagent leurs renseignements personnels.</p>
 									</li>
@@ -158,10 +157,11 @@
 								</header>
 								<ul class="style3">
 									<li class="first">
-										<p class="btn fa fa-envelope"> Envoyer un mail</p></li>
-										<li class="first"><p class="fa btn fa-facebook"> Page facebook</a ></p>
-
+										<p class="btn fa fa-envelope"> Envoyer un mail</p>
 									</li>
+										<li class="first">
+											<p class="fa btn fa-facebook"> Page facebook</a ></p>
+										</li>
 								</ul>
 							</section>
 						</div>
@@ -187,8 +187,6 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>

@@ -64,9 +64,9 @@
 								<form id="level" method="post" class="skel-panels form-horizontal" action="{% url 'result' %}">
 									{% csrf_token %}
 								{%for quest,value in quiz.items %}
-									<br><br><h3><strong class="block">{{ quest.question_text }}</strong></h3>{% if quest.image%}<img style="width:120%;" src="{% static 'quiz/media/'|add:quest.image.url %}">{%else%}{%endif%}
+									<br><br><h3 class="block col-auto"><strong>{{ quest.question_text }}</strong></h3><br>{% if quest.image%}<img style="width:120%;" src="{% static 'quiz/media/'|add:quest.image.url %}"><br><br>{%else%}{%endif%}
 										{% for answer in value %}
-											{% if quest.reponses_set.count == 1 %}
+											{% if quest.type_question == "vrai/faux" or quest.reponses_set.count == 1 %}
 												{% if answer.wrong_answers %}<div class="custom-control custom-radio form-group rounded"><input class="custom-control-input"  type="radio" name='question{{quest.id}}' id="question{{quest.id}}_{{answer.wrong_answers}}" value="{{answer.wrong_answers}}"><label for="question{{quest.id}}_{{answer.wrong_answers}}" class="custom-control-label rounded d-block p-3 border bg-light text-dark">{{answer.wrong_answers}}</label></div>{% endif %}
 												{% if answer.correct_answer %}<div class="custom-control custom-radio form-group rounded"><input class="custom-control-input" type="radio" name='question{{quest.id}}' id="question{{quest.id}}_{{answer.correct_answer}}" value="{{answer.correct_answer}}"><label for="question{{quest.id}}_{{answer.correct_answer}}" class="custom-control-label rounded d-block p-3 border bg-light text-dark">{{answer.correct_answer}}</label></div>{% endif %}
 											{%else%}
@@ -88,21 +88,20 @@
 			<div id="footer">
 				<div class="container">
 					<div class="row">
-						<div class="3u">
+						<div class="5u">
 							<section id="box1">
 								<header>
-									<h2>actualités</h2>		
+									<h2>Contact</h2>		
 								</header>
 								<ul class="style3">
 									<li class="first">
-										<p class="date"><a href="#">FBI 2019 </a></p>
-										<p><a href="https://pdf.ic3.gov/2019_IC3Report.pdf">FBI internet crime report </a></p>
+										<p class="btn fa fa-envelope"> Envoyer un mail</p></li>
+										<li class="first"><p class="fa btn fa-facebook"> Page facebook</a ></p>
 									</li>
-								
 								</ul>
 							</section>
 						</div>
-						<div class="5u">
+						<div class="3u">
 							<section id="box2">
 								<header>
 									
@@ -113,14 +112,11 @@
 						<div class="4u">
 							<section id="box3">
 								<header>
-									<h2>des articles externes</h2>
+									<h2>articles externes</h2>
 								</header>
 								<ul class="style1">
 									<li class="first"><a href="https://fr.malwarebytes.com/phishing/">Qu'est-ce que l'hameçonnage ? Types et exemples d'attaques par hameçonnage</a></li>
 									<li><a href="https://www.kaspersky.fr/resource-center/definitions/spear-phishing">Qu'est-ce que le phishing ciblé ?</a></li>
-									<!--<li><a href="#">Phasellus nec dictum metus in sapien pellentesque congue.</a></li>
-									<li><a href="#">Cras vitae metus aliquam risus dictum metus in sapien pharetra.</a></li>
-									<li><a href="#">Duis non dictum metus in sapien ante in metus commodo euismod lobortis.</a></li> -->
 								</ul>
 							</section>
 						</div>
@@ -150,6 +146,8 @@
 					success: function(data) {
 						$('#content').replaceWith(`<header><h2>Vous avez un score de ${data.score}<br><br> vous êtes au ${data.level}</h2></header><p class="font-weight-bolder"> ${data.message}</p><a href="{%url 'conseils'%}" class="button btn btn-default">Lire nos conseils</a>
 								<a href="{% url 'signup' %}" class="button btn-default btn">S'inscrire</a>`);
+						
+						document.documentElement.scrollTop = 250;
 					},
 					error: function(data) {
 						console.log('error');

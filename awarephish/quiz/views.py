@@ -16,7 +16,6 @@ from .models import Utilisateur, Question, Progres, Quiztest, Devoir
 from .utils import evaluate_level, get_user_answers, message_level, get_nextlevel_score, evaluate_level_test
 # Create your views here.
 
-# TODO : add security stuff (password policy validator, change password)
 def redir(request):
     return redirect('/index/')
 
@@ -119,15 +118,16 @@ def result(request):
 def phishquiz(request):
     user = get_object_or_404(Utilisateur, user=request.user)
     quiztest = random.choice(Quiztest.objects.filter(difficulty_test=user.niveau_actuel).exclude(users=user))
-    quiztest.users.set([user])
-    quiztest.save()
     quiz = {quest : [rep for rep in quest.reponses_set.all()] for quest in quiztest.questions.all()}
     return render(request,'quiz/phishing-quiz.html',{'quiz':quiz, 'quiztest':quiztest})
 
 def resultquiz(request):
     user = get_object_or_404(Utilisateur, user=request.user)
+    quiztest = get_object_or_404(Quiztest, pk=int(request.POST.get('id')))
+    quiztest.users.set([user])
+    quiztest.save()
 
-    questions = get_object_or_404(Quiztest, pk=int(request.POST.get('id'))).questions.all()
+    questions = quiztest.questions.all()
     user_answers = get_user_answers(request)
     score = 0
     scoretest = 0
@@ -144,6 +144,9 @@ def resultquiz(request):
                     score += answer_score
                     nbr_reponse_correcte += 1
                     nbr_reponse += 1
+                elif answer == "Je ne sais pas":
+                    nbr_reponse += 1
+                    continue
                 else:
                     nbr_reponse += 1
                     score -= answer_score
