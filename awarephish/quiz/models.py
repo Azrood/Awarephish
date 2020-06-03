@@ -44,6 +44,9 @@ class Quiztest(models.Model): # test in mcd
     questions = models.ManyToManyField(Question)
     users = models.ManyToManyField(Utilisateur, blank=True)
 
+    def __str__(self):
+        return f"Quiz {self.id}"
+
 class Progres(models.Model):
     user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
     date_test = models.DateTimeField("Date de test")

@@ -17,8 +17,8 @@ class QuestionAdmin(admin.ModelAdmin):
                 'fields':['question_text','image']}),
     ]
     inlines = [ReponsesAdmin]
-    list_filter=['type_question','difficulty']
-    list_display=['__str__','type_question','difficulty','note']
+    list_filter = ['type_question','difficulty']
+    list_display = ['__str__','type_question','difficulty','note']
 
 class DevoirAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -27,15 +27,19 @@ class DevoirAdmin(admin.ModelAdmin):
         ("Contenu",
             {'fields':['duree','contenu','texte']}),
     ]
-    list_filter=['difficulty_devoir','type_devoir','duree']
-    list_display=('difficulty_devoir','type_devoir','duree')
+    list_filter = ['difficulty_devoir','type_devoir','duree']
+    list_display = ('difficulty_devoir','type_devoir','duree')
 
 class UtilisateurAdmin(admin.ModelAdmin):
-    list_display=['user','niveau_actuel','score_actuel']
-    list_filter=['niveau_actuel','score_actuel']
+    list_display = ['user','niveau_actuel','score_actuel']
+    list_filter = ['niveau_actuel','score_actuel']
+
+class QuiztestAdmin(admin.ModelAdmin):
+    list_display = ['__str__','difficulty_test']
+    list_filter = ['difficulty_test']
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Quiztest)
+admin.site.register(Quiztest, QuiztestAdmin)
 admin.site.register(Utilisateur, UtilisateurAdmin)
 admin.site.register(Devoir, DevoirAdmin)
 admin.site.register(Progres)
