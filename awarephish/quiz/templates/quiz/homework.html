@@ -171,7 +171,6 @@
 			let classe = $(this).attr('class');
 			let dict_user = $.extend({},JSON.parse(localStorage.getItem("{{user}}")), {[devoirId]:classe});
 			localStorage.setItem("{{user}}",JSON.stringify(dict_user));
-			console.log(dict_user);
 		});
 		$(".col-auto a").click( function() {
 			$(this).addClass('badge-success').removeClass('badge-warning');
@@ -179,7 +178,6 @@
 			let classe = $(this).attr('class');
 			let dict_user = $.extend({},JSON.parse(localStorage.getItem("{{user}}")), {[devoirId]:classe});
 			localStorage.setItem("{{user}}",JSON.stringify(dict_user));
-
 		});
 		</script>
 	</body>
