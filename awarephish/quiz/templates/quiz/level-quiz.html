@@ -144,7 +144,7 @@
 					csrfmiddlewaretoken: "{{ csrf_token }}",
 					data:$(form).serialize()+"&id={% for q,v in quiz.items%}{{q.id}},{%endfor%}",
 					success: function(data) {
-						$('#content').replaceWith(`<header><h2>Vous avez un score de ${data.score}<br><br> vous êtes au ${data.level}</h2></header><p class="font-weight-bolder"> ${data.message}</p><a href="{%url 'conseils'%}" class="button btn btn-default">Lire nos conseils</a>
+						$('#content').replaceWith(`<header><h2>Vous avez un score de ${data.score}<br><br> vous avez un niveau ${data.level}</h2></header><p class="font-weight-bolder"> ${data.message}</p><a href="{%url 'conseils'%}" class="button btn btn-default">Lire nos conseils</a>
 								<a href="{% url 'signup' %}" class="button btn-default btn">S'inscrire</a>`);
 						
 						document.documentElement.scrollTop = 250;

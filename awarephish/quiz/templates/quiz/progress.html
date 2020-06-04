@@ -157,7 +157,7 @@
     data: {
         labels: labels,
         datasets: [{
-            label: 'Progrès au cours du temps',
+            label: 'score',
             backgroundColor: 'lightblue',
             borderColor: 'rgb(255, 99, 132)',
 			pointStrokeColor      : "#fff",
@@ -168,7 +168,12 @@
     },
 
     // Configuration options go here
-    options: {}
+    options: {
+		title: {
+			display: true,
+			text: 'Evolution du score aux quiz au cours du temps',
+		}
+	}
 });
 			},
 			error : function(result){
