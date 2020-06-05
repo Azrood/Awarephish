@@ -2,6 +2,17 @@
 
 AwarePhish is a phishing threat awareness site, it allows users to register to take phishing quizzes and keep track of their score as well as view the evolution of their score over time.
 
+## Running the web app
+
+If you want to run the web app, you need to install the required python libs.
+```
+pip install -r requirements.txt
+```
+
+You can then run the app in a local server.
+```
+python manage.py runserver
+```
 
 ### Homepage
 ![accueil](https://user-images.githubusercontent.com/53349565/83779186-2890fc00-a67b-11ea-991b-f5e37a912e02.png)
